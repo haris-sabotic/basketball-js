@@ -4,18 +4,17 @@ background.x = SCREEN_WIDTH / 2;
 background.y = SCREEN_HEIGHT / 2;
 PIXI_APP.stage.addChild(background);
 
-let playAudioBackground = () => new Audio("assets/audio/background.mp3").play();
 let playAudioBasketBounce = () => new Audio("assets/audio/basket_bounce.mp3").play();
 let playAudioNetSwish = () => new Audio("assets/audio/net_swish.mp3").play();
 let playAudioBallWhoosh = () => new Audio("assets/audio/ball_whoosh.mp3").play();
 
-let audioBackground = new Audio("assets/audio/background.mp3");
-audioBackground.loop = true;
-audioBackground.volume = 0.1;
-audioBackground.play();
-audioBackground.addEventListener("canplaythrough", function () {
-    audioBackground.play();
-});
+// let audioBackground = new Audio("assets/audio/background.mp3");
+// audioBackground.loop = true;
+// audioBackground.volume = 0.1;
+// audioBackground.play();
+// audioBackground.addEventListener("canplaythrough", function () {
+//     audioBackground.play();
+// });
 
 
 let score = 0;
