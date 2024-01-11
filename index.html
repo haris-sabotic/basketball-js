@@ -1,0 +1,68 @@
+<!doctype html>
+<html>
+
+<head>
+    <script src="js/pixi.min.js"></script>
+    <script src="js/matter.min.js"></script>
+    <script src="js/howler.min.js"></script>
+
+    <style>
+        html,
+        body {
+            margin: 0;
+            padding: 0;
+            background-color: black;
+        }
+
+        .hidden {
+            display: none;
+        }
+
+        .video-container {
+            width: 100vw;
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        video {
+            width: 100%;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="play-container">
+        <button id="play">PLAY</button>
+    </div>
+
+    <div class="video-container hidden">
+        <video id="splash">
+            <source src="assets/video.mp4" type="video/mp4">
+            Your browser does not support the video tag.
+        </video>
+    </div>
+
+
+    <script>
+        let play = document.getElementById("play");
+        play.addEventListener("click", () => {
+            document.querySelector(".play-container").remove();
+
+            document.querySelector(".video-container").classList.remove("hidden");
+
+            let video = document.getElementById("splash");
+            console.log(video);
+            video.play();
+
+            video.addEventListener("ended", () => {
+                document.querySelector(".video-container").remove();
+
+                window.location.href = "game.html";
+            });
+        })
+    </script>
+</body>
+
+</html>
