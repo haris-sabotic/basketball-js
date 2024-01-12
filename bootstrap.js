@@ -47,7 +47,5 @@ let audioBallWhoosh = new Howl({
 
 let audioBackground = new Howl({
     src: ['assets/audio/background.mp3'],
-    html5: true,
     loop: true,
-    volume: 0.2
 });

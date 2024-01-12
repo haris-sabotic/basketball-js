@@ -12,7 +12,23 @@ function runMain() {
     // audioBackground.addEventListener("canplaythrough", function () {
     //     audioBackground.play();
     // });
-    audioBackground.play();
+    let audioBackgroundPlaying = false;
+    audioBackground.onload = () => {
+        if (!audioBackgroundPlaying) {
+            audioBackground.play();
+            audioBackgroundPlaying = true;
+        }
+    };
+    audioBackground.onunlock = () => {
+        if (!audioBackgroundPlaying) {
+            audioBackground.play();
+            audioBackgroundPlaying = true;
+        }
+    };
+    if (!audioBackgroundPlaying) {
+        audioBackground.play();
+        audioBackgroundPlaying = true;
+    }
 
 
 
