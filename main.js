@@ -3,7 +3,7 @@ function runMain() {
     background.anchor.set(0.5);
     background.x = SCREEN_WIDTH / 2;
     background.y = SCREEN_HEIGHT / 2;
-    if (background.width < background.height) {
+    if (PIXI_APP.screen.width < PIXI_APP.screen.height) {
         let ratio = background.width / background.height;
         background.height = PIXI_APP.screen.height;
         background.width = ratio * PIXI_APP.screen.height;
@@ -12,6 +12,7 @@ function runMain() {
         background.width = PIXI_APP.screen.width;
         background.height = ratio * PIXI_APP.screen.width;
     }
+
     PIXI_APP.stage.addChild(background);
 
     let bodyGround = Bodies.rectangle(
