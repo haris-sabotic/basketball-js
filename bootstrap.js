@@ -21,7 +21,7 @@ let MATTER_ENGINE;
 
 let BALL_TEXTURE = PIXI.Texture.from("assets/ball.png");
 let BOARD_TEXTURE = PIXI.Texture.from("assets/board.png");
-let BACKGROUND_TEXTURE = PIXI.Texture.from("assets/background.jpg");
+let BACKGROUND_TEXTURE = PIXI.Texture.from("assets/background3.png");
 
 function runBootstrap() {
     PIXI_APP = new PIXI.Application({ background: '#1099bb', resizeTo: window });
@@ -37,6 +37,9 @@ function runBootstrap() {
 
 let audioBasketBounce = new Howl({
     src: ['assets/audio/basket_bounce.mp3']
+});
+let audioGroundBounce = new Howl({
+    src: ['assets/audio/ground_bounce.mp3']
 });
 let audioNetSwish = new Howl({
     src: ['assets/audio/net_swish.mp3']

@@ -3,15 +3,18 @@ function runMain() {
     background.anchor.set(0.5);
     background.x = SCREEN_WIDTH / 2;
     background.y = SCREEN_HEIGHT / 2;
+    let ratio = background.width / background.height;
+    background.height = PIXI_APP.screen.height;
+    background.width = ratio * PIXI_APP.screen.height;
     PIXI_APP.stage.addChild(background);
 
-    // let audioBackground = new Audio("assets/audio/background.mp3");
-    // audioBackground.loop = true;
-    // audioBackground.volume = 0.1;
-    // audioBackground.play();
-    // audioBackground.addEventListener("canplaythrough", function () {
-    //     audioBackground.play();
-    // });
+    let bodyGround = Bodies.rectangle(
+        0, SCREEN_HEIGHT,
+        999999, 300,
+        { isStatic: true, label: "ground" }
+    );
+    Composite.add(MATTER_ENGINE.world, [bodyGround]);
+
     let audioBackgroundPlaying = false;
     audioBackground.onload = () => {
         if (!audioBackgroundPlaying) {
@@ -55,6 +58,7 @@ function runMain() {
     let ballFlying = false;
     let ballFalling = false;
     let threePointer = false;
+    let touchedGroundOnce = false;
 
     const BALL_STARTING_POSITION = Vector.create(SCREEN_WIDTH / 2, SCREEN_HEIGHT / 2 + 500);
     const SETUP_BALL = () => {
@@ -89,6 +93,7 @@ function runMain() {
     const shootBall = (x, y) => {
         audioBallWhoosh.play();
         threePointer = true;
+        touchedGroundOnce = false;
 
         let velocity = Vector.sub(
             Vector.create(x, y),
@@ -135,7 +140,6 @@ function runMain() {
     });
 
     let hoopHorizontalDirection = 0;
-    let lasthoopHorizontalDirection = 0;
     let hoopHorizontalSpeed = 5;
     let enableMovingHorizontallyAfterEachPoint = false;
     let hoopHorizontalLimit = HOOP_STARTING_POSITION.x;
@@ -192,13 +196,13 @@ function runMain() {
             ball.sprite.zIndex = 99;
         }
 
-        if (ball.body.position.y + ball.sprite.height / 2 > SCREEN_HEIGHT) {
-            ball.deleteSelf(PIXI_APP, MATTER_ENGINE);
-            SETUP_BALL();
-        }
+        // if (ball.body.position.y + ball.sprite.height / 2 > SCREEN_HEIGHT) {
+        //     ball.deleteSelf(PIXI_APP, MATTER_ENGINE);
+        //     SETUP_BALL();
+        // }
     });
 
-    Events.on(MATTER_ENGINE, "collisionEnd", (event) => {
+    Events.on(MATTER_ENGINE, "collisionStart", (event) => {
         event.pairs.forEach(pair => {
             if (pair.bodyA.label == "ball" || pair.bodyB.label == "ball") {
                 if (
@@ -209,6 +213,28 @@ function runMain() {
                 ) {
                     audioBasketBounce.play();
                     threePointer = false;
+                }
+            }
+        });
+    });
+
+    Events.on(MATTER_ENGINE, "collisionEnd", (event) => {
+        event.pairs.forEach(pair => {
+            if (pair.bodyA.label == "ball" || pair.bodyB.label == "ball") {
+                if (
+                    pair.bodyA.label == "ground" ||
+                    pair.bodyB.label == "ground"
+                ) {
+                    if (touchedGroundOnce) {
+                        audioGroundBounce.volume = 0.5;
+                        audioGroundBounce.play();
+                        ball.deleteSelf(PIXI_APP, MATTER_ENGINE);
+                        SETUP_BALL();
+                    } else {
+                        audioGroundBounce.volume = 1.0;
+                        audioGroundBounce.play();
+                        touchedGroundOnce = true;
+                    }
                 }
             }
         });
@@ -249,8 +275,6 @@ function runMain() {
                             hoopHorizontalDirection = 1;
                             hoopHorizontalLimit = HOOP_STARTING_POSITION.x + randomIntFromInterval(100, 300);
                         }
-
-                        console.log(hoopHorizontalDirection, hoopHorizontalLimit);
                     } else {
                         if (hoopVerticalDirection == 0) {
                             hoopHorizontalDirection = 0;
