@@ -9,13 +9,45 @@ const
     Composites = Matter.Composites,
     Composite = Matter.Composite;
 
+function randomIntFromInterval(min, max) { // min and max included 
+    return Math.floor(Math.random() * (max - min + 1) + min);
+}
 
-let PIXI_APP = new PIXI.Application({ background: '#1099bb', resizeTo: window });
-PIXI_APP.stage.sortableChildren = true;
-let CANVAS = document.body.appendChild(PIXI_APP.view);
-let SCREEN_WIDTH = PIXI_APP.screen.width;
-let SCREEN_HEIGHT = PIXI_APP.screen.height;
+let PIXI_APP;
+let CANVAS;
+let SCREEN_WIDTH;
+let SCREEN_HEIGHT;
+let MATTER_ENGINE;
 
-let MATTER_ENGINE = Engine.create();
-MATTER_ENGINE.gravity.scale = 0.01;
-Runner.run(Runner.create(), MATTER_ENGINE);
+let BALL_TEXTURE = PIXI.Texture.from("assets/ball.png");
+let BOARD_TEXTURE = PIXI.Texture.from("assets/board.png");
+let BACKGROUND_TEXTURE = PIXI.Texture.from("assets/background.jpg");
+
+function runBootstrap() {
+    PIXI_APP = new PIXI.Application({ background: '#1099bb', resizeTo: window });
+    PIXI_APP.stage.sortableChildren = true;
+    CANVAS = document.body.appendChild(PIXI_APP.view);
+    SCREEN_WIDTH = PIXI_APP.screen.width;
+    SCREEN_HEIGHT = PIXI_APP.screen.height;
+
+    MATTER_ENGINE = Engine.create();
+    MATTER_ENGINE.gravity.scale = 0.005;
+    Runner.run(Runner.create(), MATTER_ENGINE);
+}
+
+let audioBasketBounce = new Howl({
+    src: ['assets/audio/basket_bounce.mp3']
+});
+let audioNetSwish = new Howl({
+    src: ['assets/audio/net_swish.mp3']
+});
+let audioBallWhoosh = new Howl({
+    src: ['assets/audio/ball_whoosh.mp3']
+});
+
+let audioBackground = new Howl({
+    src: ['assets/audio/background.mp3'],
+    html5: true,
+    loop: true,
+    volume: 0.2
+});

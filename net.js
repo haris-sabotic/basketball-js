@@ -149,6 +149,21 @@ class Net {
         this.spritesNetConstraintsDecoration = spritesNetConstraintsDecoration;
     }
 
+    setPosition(basketCornerLeft, basketCornerRight) {
+        this.basketCornerLeft = basketCornerLeft;
+        this.basketCornerRight = basketCornerRight;
+
+        Body.setPosition(
+            this.compositeNet.composites[0].bodies[0],
+            basketCornerLeft
+        );
+
+        Body.setPosition(
+            this.compositeNet.composites[1].bodies[0],
+            basketCornerRight
+        );
+    }
+
     deleteSelf(pixiApp, matterEngine) {
         this.spritesChainLeft.forEach(sprite => {
             pixiApp.stage.removeChild(sprite);

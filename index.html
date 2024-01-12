@@ -14,6 +14,19 @@
             background-color: black;
         }
 
+        .play-container {
+            width: 100vw;
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        #play {
+            padding: 20px 50px;
+            font-size: 3rem;
+        }
+
         .hidden {
             display: none;
         }
@@ -45,6 +58,12 @@
     </div>
 
 
+    <script src="bootstrap.js"></script>
+    <script src="net.js"></script>
+    <script src="hoop.js"></script>
+    <script src="ball.js"></script>
+    <script src="main.js"></script>
+
     <script>
         let play = document.getElementById("play");
         play.addEventListener("click", () => {
@@ -59,7 +78,9 @@
             video.addEventListener("ended", () => {
                 document.querySelector(".video-container").remove();
 
-                window.location.href = "game.html";
+                runBootstrap();
+                runMain();
+                // window.location.href = "game.html";
             });
         })
     </script>

@@ -1,7 +1,7 @@
 class Hoop {
     #position = null;
     #net = null;
-    #ratio = 3 / 4;
+    #ratio = 463 / 745;
     #basketHeight = 15;
 
     #spriteBoard = null;
@@ -23,13 +23,13 @@ class Hoop {
     constructor(pixiApp, matterEngine, attributes) {
         this.#position = attributes.position;
 
-        let board = PIXI.Sprite.from("assets/board.jpg");
+        let board = new PIXI.Sprite(BOARD_TEXTURE);
         board.anchor.set(0.5);
         board.width = attributes.width;
         board.height = this.#ratio * attributes.width;
         board.x = attributes.position.x;
         board.y = attributes.position.y;
-        // pixiApp.stage.addChild(board);
+        pixiApp.stage.addChild(board);
         this.#spriteBoard = board;
 
         // let boardBackground = new PIXI.Sprite(PIXI.Texture.WHITE);
@@ -77,7 +77,7 @@ class Hoop {
         let basket = new PIXI.Sprite(PIXI.Texture.WHITE);
         basket.tint = 0xFF0000;
         basket.anchor.set(0.5);
-        basket.width = Math.round(board.width * 0.45);
+        basket.width = Math.round(board.width * 0.30);
         basket.height = this.#basketHeight;
         basket.x = this.#getSpriteBasketPosition().x;
         basket.y = this.#getSpriteBasketPosition().y;
@@ -119,9 +119,8 @@ class Hoop {
 
         // NET
 
-        let leftCorner = Vector.create(basket.x - basket.width / 2, basket.y);
-        let rightCorner = Vector.create(basket.x + basket.width / 2, basket.y);
-        let net = new Net(pixiApp, matterEngine, leftCorner, rightCorner, attributes.width);
+        let netCorners = this.#getNetCorners();
+        let net = new Net(pixiApp, matterEngine, netCorners.left, netCorners.right, attributes.width);
         this.#net = net;
     }
 
@@ -169,6 +168,32 @@ class Hoop {
 
         let sensorBasketRect = this.#getSensorBasketRect();
         Body.setPosition(this.#sensorBasket, Vector.create(sensorBasketRect.x, sensorBasketRect.y));
+
+        let netCorners = this.#getNetCorners();
+        this.#net.setPosition(netCorners.left, netCorners.right);
+    }
+
+    moveHorizontally(amount) {
+        this.setPosition(
+            Vector.create(this.#spriteBoard.x + amount, this.#spriteBoard.y)
+        );
+    }
+
+    moveVertically(amount) {
+        this.setPosition(
+            Vector.create(this.#spriteBoard.x, this.#spriteBoard.y + amount)
+        );
+    }
+
+    centerPos() {
+        return Vector.create(this.#spriteBoard.x, this.#spriteBoard.y);
+    }
+
+    #getNetCorners() {
+        return {
+            left: Vector.create(this.#spriteBasket.x - this.#spriteBasket.width / 2, this.#spriteBasket.y),
+            right: Vector.create(this.#spriteBasket.x + this.#spriteBasket.width / 2, this.#spriteBasket.y)
+        };
     }
 
     #getSensorBasketRect() {
@@ -185,7 +210,7 @@ class Hoop {
     #getSpriteBasketPosition() {
         return Vector.create(
             this.#spriteBoard.position.x,
-            this.#spriteBoard.position.y + this.#spriteBoard.height / 4
+            this.#spriteBoard.position.y + this.#spriteBoard.height / 3
         );
     }
 

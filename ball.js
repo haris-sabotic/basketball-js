@@ -7,7 +7,7 @@ class Ball {
      * 
      * @param {PIXI.Application} pixiApp 
      * @param {Matter.Engine} matterEngine
-     * @param {{imagePath: string, radius: number, position: Matter.Vector}} attributes 
+     * @param {{radius: number, position: Matter.Vector}} attributes 
      */
     constructor(pixiApp, matterEngine, attributes) {
         let body = Bodies.circle(
@@ -25,7 +25,7 @@ class Ball {
         );
         Composite.add(matterEngine.world, [sensor]);
 
-        let sprite = PIXI.Sprite.from(attributes.imagePath);
+        let sprite = new PIXI.Sprite(BALL_TEXTURE);
         sprite.anchor.set(0.5);
         sprite.width = attributes.radius * 2;
         sprite.height = attributes.radius * 2;
