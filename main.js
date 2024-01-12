@@ -3,7 +3,7 @@ function runMain() {
     background.anchor.set(0.5);
     background.x = SCREEN_WIDTH / 2;
     background.y = SCREEN_HEIGHT / 2;
-    if (PIXI_APP.screen.width < PIXI_APP.screen.height) {
+    if (PIXI_APP.screen.width / PIXI_APP.screen.height < background.width / background.height) {
         let ratio = background.width / background.height;
         background.height = PIXI_APP.screen.height;
         background.width = ratio * PIXI_APP.screen.height;
