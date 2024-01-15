@@ -21,7 +21,7 @@ let MATTER_ENGINE;
 
 let BALL_TEXTURE = PIXI.Texture.from("assets/ball.png");
 let BOARD_TEXTURE = PIXI.Texture.from("assets/board.png");
-let BACKGROUND_TEXTURE = PIXI.Texture.from("assets/background3.png");
+let BACKGROUND_TEXTURE = PIXI.Texture.from("assets/background.png");
 
 function runBootstrap() {
     PIXI_APP = new PIXI.Application({ background: '#1099bb', resizeTo: window });
