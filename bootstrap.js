@@ -4,6 +4,7 @@ const
     Engine = Matter.Engine,
     Runner = Matter.Runner,
     Body = Matter.Body,
+    World = Matter.World,
     Bodies = Matter.Bodies,
     Constraint = Matter.Constraint,
     Composites = Matter.Composites,

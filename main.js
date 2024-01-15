@@ -1,3 +1,4 @@
+let score = 0;
 function runMain() {
     let background = new PIXI.Sprite(BACKGROUND_TEXTURE);
     background.anchor.set(0.5);
@@ -42,7 +43,7 @@ function runMain() {
 
 
 
-    let score = 0;
+    score = 0;
     let scoreText = new PIXI.Text(
         `${score}`,
         new PIXI.TextStyle({
@@ -77,6 +78,7 @@ function runMain() {
 
         if (timer == 0) {
             console.log("GAME OVER");
+            finish();
         }
     }, 1000);
 
@@ -90,6 +92,7 @@ function runMain() {
     let ballFalling = false;
     let threePointer = false;
     let touchedGroundOnce = false;
+    let canAddPoint = true;
 
     const BALL_STARTING_POSITION = Vector.create(SCREEN_WIDTH / 2, SCREEN_HEIGHT / 2 + 500);
     const SETUP_BALL = () => {
@@ -125,6 +128,7 @@ function runMain() {
         audioBallWhoosh.play();
         threePointer = true;
         touchedGroundOnce = false;
+        canAddPoint = true;
 
         let velocity = Vector.sub(
             Vector.create(x, y),
@@ -276,43 +280,47 @@ function runMain() {
 
     Events.on(MATTER_ENGINE, "collisionEnd", (event) => {
         event.pairs.forEach(pair => {
-            if (
-                (pair.bodyA.label == "sensorBall" && pair.bodyB.label == "sensorBasket") ||
-                (pair.bodyA.label == "sensorBasket" && pair.bodyB.label == "sensorBall")
-            ) {
-                if (threePointer) {
-                    score += 3;
-                } else {
-                    score += 2;
-                }
-                scoreText.text = `${score}`;
-                audioNetSwish.play();
+            if (canAddPoint) {
+                if (
+                    (pair.bodyA.label == "sensorBall" && pair.bodyB.label == "sensorBasket") ||
+                    (pair.bodyA.label == "sensorBasket" && pair.bodyB.label == "sensorBall")
+                ) {
+                    canAddPoint = false;
 
-                if (score >= 10 && score < 20) {
-                    if (hoopHorizontalDirection == 0) {
-                        hoopHorizontalDirection = 1;
-                    }
-                }
-
-                if (score >= 20) {
-                    if (hoopVerticalDirection != 0) {
-                        enableMovingHorizontallyAfterEachPoint = true;
-                    }
-
-                    if (enableMovingHorizontallyAfterEachPoint) {
-                        hoopVerticalDirection = 0;
-
-                        if (hoop.centerPos().x >= HOOP_STARTING_POSITION.x) {
-                            hoopHorizontalDirection = -1;
-                            hoopHorizontalLimit = HOOP_STARTING_POSITION.x - randomIntFromInterval(100, 300);
-                        } else if (hoop.centerPos().x <= HOOP_STARTING_POSITION.x) {
-                            hoopHorizontalDirection = 1;
-                            hoopHorizontalLimit = HOOP_STARTING_POSITION.x + randomIntFromInterval(100, 300);
-                        }
+                    if (threePointer) {
+                        score += 3;
                     } else {
-                        if (hoopVerticalDirection == 0) {
-                            hoopHorizontalDirection = 0;
-                            hoopVerticalDirection = 1;
+                        score += 2;
+                    }
+                    scoreText.text = `${score}`;
+                    audioNetSwish.play();
+
+                    if (score >= 10 && score < 20) {
+                        if (hoopHorizontalDirection == 0) {
+                            hoopHorizontalDirection = 1;
+                        }
+                    }
+
+                    if (score >= 20) {
+                        if (hoopVerticalDirection != 0) {
+                            enableMovingHorizontallyAfterEachPoint = true;
+                        }
+
+                        if (enableMovingHorizontallyAfterEachPoint) {
+                            hoopVerticalDirection = 0;
+
+                            if (hoop.centerPos().x >= HOOP_STARTING_POSITION.x) {
+                                hoopHorizontalDirection = -1;
+                                hoopHorizontalLimit = HOOP_STARTING_POSITION.x - randomIntFromInterval(100, 300);
+                            } else if (hoop.centerPos().x <= HOOP_STARTING_POSITION.x) {
+                                hoopHorizontalDirection = 1;
+                                hoopHorizontalLimit = HOOP_STARTING_POSITION.x + randomIntFromInterval(100, 300);
+                            }
+                        } else {
+                            if (hoopVerticalDirection == 0) {
+                                hoopHorizontalDirection = 0;
+                                hoopVerticalDirection = 1;
+                            }
                         }
                     }
                 }
