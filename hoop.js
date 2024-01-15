@@ -138,11 +138,11 @@ class Hoop {
     }
 
     #getSensorBasketRect() {
-        let width = this.#spriteBasket.width / 2;
+        let width = this.#spriteBasket.width / 4;
         let height = this.#basketHeight;
         return {
             x: this.#spriteBasket.x,
-            y: this.#spriteBoard.y + this.#spriteBoard.height,
+            y: this.#spriteBoard.y + this.#spriteBoard.height + 20,
             width: width,
             height: height,
         };
