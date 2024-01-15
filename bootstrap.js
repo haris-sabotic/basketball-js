@@ -32,7 +32,10 @@ function runBootstrap() {
 
     MATTER_ENGINE = Engine.create();
     MATTER_ENGINE.gravity.scale = 0.005;
-    Runner.run(Runner.create(), MATTER_ENGINE);
+
+    let runner = Runner.create();
+    runner.isFixed = true;
+    Runner.run(runner, MATTER_ENGINE);
 }
 
 let audioBasketBounce = new Howl({
