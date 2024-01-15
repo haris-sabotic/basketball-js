@@ -30,12 +30,14 @@ function runBootstrap() {
     SCREEN_WIDTH = PIXI_APP.screen.width;
     SCREEN_HEIGHT = PIXI_APP.screen.height;
 
+    PIXI_APP.ticker.maxFPS = 60;
+
     MATTER_ENGINE = Engine.create();
     MATTER_ENGINE.gravity.scale = 0.005;
 
     let runner = Runner.create();
     runner.isFixed = true;
-    Runner.run(runner, MATTER_ENGINE);
+    // Runner.run(runner, MATTER_ENGINE);
 }
 
 let audioBasketBounce = new Howl({

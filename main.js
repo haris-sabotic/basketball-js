@@ -154,7 +154,7 @@ function runMain() {
     let hoopVerticalDirection = 0;
     let hoopVerticalSpeed = 5;
 
-    PIXI_APP.ticker.add((_delta) => {
+    PIXI_APP.ticker.add((delta) => {
         if (enableMovingHorizontallyAfterEachPoint) {
             if (hoopHorizontalDirection == -1) {
                 if (hoop.centerPos().x <= hoopHorizontalLimit) {
@@ -207,6 +207,9 @@ function runMain() {
         //     ball.deleteSelf(PIXI_APP, MATTER_ENGINE);
         //     SETUP_BALL();
         // }
+
+
+        Runner.tick(runner, MATTER_ENGINE, delta);
     });
 
     Events.on(MATTER_ENGINE, "collisionStart", (event) => {
