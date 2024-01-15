@@ -35,8 +35,8 @@ function runBootstrap() {
     MATTER_ENGINE = Engine.create();
     MATTER_ENGINE.gravity.scale = 0.005;
 
-    let runner = Runner.create();
-    runner.isFixed = true;
+    // let runner = Runner.create();
+    // runner.isFixed = true;
     // Runner.run(runner, MATTER_ENGINE);
 }
 

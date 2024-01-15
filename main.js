@@ -209,7 +209,7 @@ function runMain() {
         // }
 
 
-        Runner.tick(runner, MATTER_ENGINE, delta);
+        Engine.update(MATTER_ENGINE, PIXI_APP.ticker.deltaMS);
     });
 
     Events.on(MATTER_ENGINE, "collisionStart", (event) => {
