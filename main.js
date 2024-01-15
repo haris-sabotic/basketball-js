@@ -57,6 +57,30 @@ function runMain() {
     scoreText.y = 90;
     scoreText.anchor.set(0.5);
 
+    let timer = 30;
+    let timerText = new PIXI.Text(
+        `${timer}`,
+        new PIXI.TextStyle({
+            fontSize: 100,
+            fontWeight: "bold",
+            fill: 0xffffff,
+            stroke: 0x000000,
+            strokeThickness: 15,
+        })
+    );
+    timerText.x = SCREEN_WIDTH;
+    timerText.y = 5;
+    timerText.anchor.set(1.0, 0.0);
+    setInterval(function () {
+        timer -= 1;
+        timerText.text = `${timer}`;
+
+        if (timer == 0) {
+            console.log("GAME OVER");
+        }
+    }, 1000);
+
+
 
     let hoop = null;
     let ball = null;
@@ -107,7 +131,7 @@ function runMain() {
             touchStartMousePos
         );
         velocity = Vector.normalise(velocity);
-        velocity = Vector.create(velocity.x * 35, velocity.y * 60);
+        velocity = Vector.create(velocity.x * 50, velocity.y * 90);
 
         Body.setStatic(ball.body, false);
         Body.setVelocity(ball.body, velocity);
@@ -195,7 +219,7 @@ function runMain() {
             ball.enableCollision();
         } else {
             if (ballFlying && !ballFalling) {
-                ball.scale(0.984);
+                ball.scale(0.98);
             }
         }
 
@@ -298,4 +322,5 @@ function runMain() {
 
 
     PIXI_APP.stage.addChild(scoreText);
+    PIXI_APP.stage.addChild(timerText);
 }

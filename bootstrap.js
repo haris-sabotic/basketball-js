@@ -33,7 +33,7 @@ function runBootstrap() {
     PIXI_APP.ticker.maxFPS = 60;
 
     MATTER_ENGINE = Engine.create();
-    MATTER_ENGINE.gravity.scale = 0.005;
+    MATTER_ENGINE.gravity.scale = 0.012;
 
     // let runner = Runner.create();
     // runner.isFixed = true;
