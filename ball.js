@@ -20,7 +20,7 @@ class Ball {
         let sensor = Bodies.circle(
             attributes.position.x,
             attributes.position.y,
-            attributes.radius / 3,
+            attributes.radius / 2,
             { mass: 0, isSensor: true, label: "sensorBall" }
         );
         Composite.add(matterEngine.world, [sensor]);

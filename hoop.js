@@ -142,7 +142,7 @@ class Hoop {
         let height = this.#basketHeight;
         return {
             x: this.#spriteBasket.x,
-            y: this.#spriteBoard.y + this.#spriteBoard.height + 20,
+            y: this.#spriteBoard.y + this.#spriteBoard.height + 30,
             width: width,
             height: height,
         };
