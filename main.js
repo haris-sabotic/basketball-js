@@ -90,7 +90,7 @@ function runMain() {
     let touchStartBallPos = Vector.create(0, 0);
     let ballFlying = false;
     let ballFalling = false;
-    let threePointer = false;
+    let clearShot = false;
     let touchedGroundOnce = false;
     let canAddPoint = true;
 
@@ -126,7 +126,7 @@ function runMain() {
 
     const shootBall = (x, y) => {
         audioBallWhoosh.play();
-        threePointer = true;
+        clearShot = true;
         touchedGroundOnce = false;
         canAddPoint = true;
 
@@ -250,7 +250,7 @@ function runMain() {
                     pair.bodyB.label == "edgeRight"
                 ) {
                     audioBasketBounce.play();
-                    threePointer = false;
+                    clearShot = false;
                 }
             }
         });
@@ -287,10 +287,10 @@ function runMain() {
                 ) {
                     canAddPoint = false;
 
-                    if (threePointer) {
-                        score += 3;
-                    } else {
+                    if (clearShot) {
                         score += 2;
+                    } else {
+                        score += 1;
                     }
                     scoreText.text = `${score}`;
                     audioNetSwish.play();
