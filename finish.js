@@ -21,4 +21,8 @@ const finish = () => {
     }
 
     document.querySelector(".highscore-value").innerHTML = `${highscore}`;
+
+    document.querySelector("#refresh").addEventListener("click", () => {
+        location.reload();
+    });
 };
