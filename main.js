@@ -58,7 +58,7 @@ function runMain() {
     scoreText.y = 90;
     scoreText.anchor.set(0.5);
 
-    let timer = 30;
+    let timer = 60;
     let timerText = new PIXI.Text(
         `${timer}`,
         new PIXI.TextStyle({
