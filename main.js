@@ -231,11 +231,6 @@ function runMain() {
             ball.sprite.zIndex = 99;
         }
 
-        // if (ball.body.position.y + ball.sprite.height / 2 > SCREEN_HEIGHT) {
-        //     ball.deleteSelf(PIXI_APP, MATTER_ENGINE);
-        //     SETUP_BALL();
-        // }
-
 
         Engine.update(MATTER_ENGINE, PIXI_APP.ticker.deltaMS);
     });
