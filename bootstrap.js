@@ -54,3 +54,20 @@ let audioBackground = new Howl({
     src: ['assets/audio/background.mp3'],
     loop: true,
 });
+
+
+// Create WebSocket connection.
+const WS = new WebSocket("ws://localhost:8000");
+let WS_ID = null;
+
+WS.addEventListener("open", (event) => {
+    // Connection opened
+});
+
+WS.addEventListener("message", (event) => {
+    let message = JSON.parse(event.data);
+
+    if (message.tag == "id") {
+        WS_ID = message.id;
+    }
+});

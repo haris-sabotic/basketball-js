@@ -232,7 +232,7 @@ function runMain() {
         }
 
 
-        Engine.update(MATTER_ENGINE, PIXI_APP.ticker.deltaMS);
+        // Engine.update(MATTER_ENGINE, PIXI_APP.ticker.deltaMS);
     });
 
     Events.on(MATTER_ENGINE, "collisionStart", (event) => {
@@ -326,4 +326,8 @@ function runMain() {
 
     PIXI_APP.stage.addChild(scoreText);
     PIXI_APP.stage.addChild(timerText);
+
+    setInterval(() => {
+        Engine.update(MATTER_ENGINE, 1000 / 60);
+    }, 1000 / 60);
 }
