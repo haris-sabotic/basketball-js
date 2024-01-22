@@ -184,7 +184,7 @@ function runMain() {
     let hoopVerticalDirection = 0;
     let hoopVerticalSpeed = 5;
 
-    setInterval(() => {
+    INTERVAL_ID = setInterval(() => {
         if (enableMovingHorizontallyAfterEachPoint) {
             if (hoopHorizontalDirection == -1) {
                 if (hoop.centerPos().x <= hoopHorizontalLimit) {

@@ -1,4 +1,5 @@
 const finish = () => {
+    clearInterval(INTERVAL_ID);
     document.querySelector("canvas").remove();
 
     World.clear(MATTER_ENGINE.world);

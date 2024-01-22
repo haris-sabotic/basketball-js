@@ -20,6 +20,8 @@ let SCREEN_WIDTH;
 let SCREEN_HEIGHT;
 let MATTER_ENGINE;
 
+let INTERVAL_ID = null;
+
 let BALL_TEXTURE = PIXI.Texture.from("assets/ball.png");
 let BOARD_TEXTURE = PIXI.Texture.from("assets/board.png");
 let BACKGROUND_TEXTURE = PIXI.Texture.from("assets/background.png");
