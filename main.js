@@ -17,7 +17,7 @@ function runMain() {
     PIXI_APP.stage.addChild(background);
 
     let bodyGround = Bodies.rectangle(
-        0, SCREEN_HEIGHT,
+        0, SCREEN_HEIGHT / 2 + 550,
         999999, 300,
         { isStatic: true, label: "ground" }
     );
@@ -137,6 +137,8 @@ function runMain() {
         velocity = Vector.normalise(velocity);
         velocity = Vector.create(velocity.x * 50, velocity.y * 90);
 
+        SEND_WS_MESSAGE("shoot", { velocity });
+
         Body.setStatic(ball.body, false);
         Body.setVelocity(ball.body, velocity);
 
@@ -182,7 +184,7 @@ function runMain() {
     let hoopVerticalDirection = 0;
     let hoopVerticalSpeed = 5;
 
-    PIXI_APP.ticker.add((delta) => {
+    setInterval(() => {
         if (enableMovingHorizontallyAfterEachPoint) {
             if (hoopHorizontalDirection == -1) {
                 if (hoop.centerPos().x <= hoopHorizontalLimit) {
@@ -232,8 +234,8 @@ function runMain() {
         }
 
 
-        // Engine.update(MATTER_ENGINE, PIXI_APP.ticker.deltaMS);
-    });
+        Engine.update(MATTER_ENGINE, 1000 / 60);
+    }, 1000 / 60);
 
     Events.on(MATTER_ENGINE, "collisionStart", (event) => {
         event.pairs.forEach(pair => {
@@ -326,8 +328,4 @@ function runMain() {
 
     PIXI_APP.stage.addChild(scoreText);
     PIXI_APP.stage.addChild(timerText);
-
-    setInterval(() => {
-        Engine.update(MATTER_ENGINE, 1000 / 60);
-    }, 1000 / 60);
 }

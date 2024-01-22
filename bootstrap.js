@@ -67,7 +67,13 @@ WS.addEventListener("open", (event) => {
 WS.addEventListener("message", (event) => {
     let message = JSON.parse(event.data);
 
+    console.log(message);
+
     if (message.tag == "id") {
         WS_ID = message.id;
     }
 });
+
+function SEND_WS_MESSAGE(tag, msg) {
+    WS.send(JSON.stringify({ id: WS_ID, tag, msg }));
+}
