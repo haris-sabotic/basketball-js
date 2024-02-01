@@ -20,8 +20,6 @@ let SCREEN_WIDTH;
 let SCREEN_HEIGHT;
 let MATTER_ENGINE;
 
-let INTERVAL_ID = null;
-
 let BALL_TEXTURE = PIXI.Texture.from("assets/ball.png");
 let BOARD_TEXTURE = PIXI.Texture.from("assets/board.png");
 let BACKGROUND_TEXTURE = PIXI.Texture.from("assets/background.png");
@@ -79,3 +77,6 @@ WS.addEventListener("message", (event) => {
 function SEND_WS_MESSAGE(tag, msg) {
     WS.send(JSON.stringify({ id: WS_ID, tag, msg }));
 }
+
+let RECORDING_BALL = [];
+let RECORDING_HOOP = [];

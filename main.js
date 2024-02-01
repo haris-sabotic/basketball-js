@@ -17,7 +17,7 @@ function runMain() {
     PIXI_APP.stage.addChild(background);
 
     let bodyGround = Bodies.rectangle(
-        0, SCREEN_HEIGHT / 2 + 550,
+        0, SCREEN_HEIGHT / 2 + 700,
         999999, 300,
         { isStatic: true, label: "ground" }
     );
@@ -125,6 +125,9 @@ function runMain() {
     SETUP_HOOP();
 
     const shootBall = (x, y) => {
+        RECORDING_BALL = [];
+        RECORDING_HOOP = [];
+
         audioBallWhoosh.play();
         clearShot = true;
         touchedGroundOnce = false;
@@ -184,7 +187,7 @@ function runMain() {
     let hoopVerticalDirection = 0;
     let hoopVerticalSpeed = 5;
 
-    INTERVAL_ID = setInterval(() => {
+    PIXI_APP.ticker.add((_delta) => {
         if (enableMovingHorizontallyAfterEachPoint) {
             if (hoopHorizontalDirection == -1) {
                 if (hoop.centerPos().x <= hoopHorizontalLimit) {
@@ -235,7 +238,7 @@ function runMain() {
 
 
         Engine.update(MATTER_ENGINE, 1000 / 60);
-    }, 1000 / 60);
+    });
 
     Events.on(MATTER_ENGINE, "collisionStart", (event) => {
         event.pairs.forEach(pair => {
@@ -265,6 +268,8 @@ function runMain() {
                         audioGroundBounce.play();
                         ball.deleteSelf(PIXI_APP, MATTER_ENGINE);
                         SETUP_BALL();
+                        RECORDING_BALL = [];
+                        RECORDING_HOOP = [];
                     } else {
                         audioGroundBounce.volume = 1.0;
                         audioGroundBounce.play();
@@ -284,13 +289,25 @@ function runMain() {
                 ) {
                     canAddPoint = false;
 
+                    let scoreType = "";
                     if (clearShot) {
+                        scoreType = "two";
                         score += 2;
                     } else {
+                        scoreType = "one";
                         score += 1;
                     }
                     scoreText.text = `${score}`;
                     audioNetSwish.play();
+
+                    let ballRecording = RECORDING_BALL;
+                    let hoopRecording = RECORDING_HOOP;
+                    ballRecording.push(ball.body.position);
+                    hoopRecording.push(hoop.sensorBasket.position);
+                    SEND_WS_MESSAGE("scored", { ballRecording, hoopRecording, scoreType });
+
+                    RECORDING_BALL = [];
+                    RECORDING_HOOP = [];
 
                     if (score >= 10 && score < 20) {
                         if (hoopHorizontalDirection == 0) {
@@ -324,6 +341,11 @@ function runMain() {
             }
         });
     });
+
+    setInterval(() => {
+        RECORDING_BALL.push({ x: ball.body.position.x, y: ball.body.position.y });
+        RECORDING_HOOP.push({ x: hoop.sensorBasket.position.x, y: hoop.sensorBasket.position.y });
+    }, 30);
 
 
     PIXI_APP.stage.addChild(scoreText);
