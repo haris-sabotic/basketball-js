@@ -72,15 +72,20 @@ function runMain() {
     timerText.x = SCREEN_WIDTH;
     timerText.y = 5;
     timerText.anchor.set(1.0, 0.0);
+    let timerPaused = false;
     setInterval(function () {
-        timer -= 1;
-        timerText.text = `${timer}`;
+        if (!timerPaused) {
+            timer -= 1;
+            timerText.text = `${timer}`;
+        }
 
         if (timer == 0) {
             console.log("GAME OVER");
             finish();
         }
     }, 1000);
+
+    let hulkShownOnce = false;
 
 
 
@@ -310,6 +315,34 @@ function runMain() {
                     RECORDING_HOOP = [];
 
                     if (score >= 10 && score < 20) {
+                        if (!hulkShownOnce) {
+                            hulkShownOnce = true;
+
+                            let overlay = new PIXI.Sprite(PIXI.Texture.WHITE);
+                            overlay.tint = 0x000000;
+                            overlay.width = SCREEN_WIDTH;
+                            overlay.height = SCREEN_HEIGHT;
+                            overlay.zIndex = 500;
+                            let hulk = new PIXI.Sprite(PIXI.Texture.from("assets/hulk.mp4"));
+                            hulk.anchor.set(0.5);
+                            hulk.x = SCREEN_WIDTH / 2;
+                            hulk.y = SCREEN_HEIGHT / 2;
+                            hulk.zIndex = 500;
+
+                            PIXI_APP.stage.addChild(overlay);
+                            PIXI_APP.stage.addChild(hulk);
+
+                            timerPaused = true;
+                            hulk.texture.baseTexture.resource.source.playbackRate = 2.0;
+
+                            hulk.texture.baseTexture.resource.source.addEventListener("ended", () => {
+                                PIXI_APP.stage.removeChild(hulk);
+                                PIXI_APP.stage.removeChild(overlay);
+
+                                timerPaused = false;
+                            });
+                        }
+
                         if (hoopHorizontalDirection == 0) {
                             hoopHorizontalDirection = 1;
                         }
