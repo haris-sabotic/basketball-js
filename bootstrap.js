@@ -59,14 +59,15 @@ let audioBackground = new Howl({
 
 
 // Create WebSocket connection.
-const WS = new WebSocket("ws://localhost:8000");
+const WS = new WebSocket("ws://84.247.177.105:8000");
 
 function SEND_WS_MESSAGE(tag, msg) {
+    console.log(`SENDING MESSAGE (${tag})`, msg);
     let strMsg = JSON.stringify(msg);
     let encryptedMsg = strMsg;
     if (msg && msg.prevScore != null) {
         console.log(msg.prevScore);
-        encryptedMsg = CryptoJS.AES.encrypt(strMsg, "0").toString();
+        encryptedMsg = CryptoJS.AES.encrypt(strMsg, msg.prevScore.toString()).toString();
     }
 
     WS.send(JSON.stringify({ authToken: TOKEN, tag, msg: encryptedMsg }));
