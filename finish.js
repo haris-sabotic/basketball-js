@@ -1,15 +1,25 @@
 const finish = () => {
-    WS.close();
+    // WS.close();
     document.querySelector("canvas").remove();
 
-    World.clear(MATTER_ENGINE.world);
-    Engine.clear(MATTER_ENGINE);
-    PIXI_APP.ticker.stop();
-    PIXI_APP.stage.destroy(true);
+    // World.clear(MATTER_ENGINE.world);
+    // Engine.clear(MATTER_ENGINE);
+    // PIXI_APP.ticker.stop();
+    // PIXI_APP.stage.destroy(true);
+
+    SEND_WS_MESSAGE("finished", null);
+
+    WS.addEventListener("message", (event) => {
+        let message = JSON.parse(event.data);
+
+        if (message.tag == "results") {
+            if (message)
+                document.querySelector(".score-value").innerHTML = `${message.score}`;
+        }
+    });
 
     document.querySelector(".finish-container").classList.remove("hidden");
 
-    document.querySelector(".score-value").innerHTML = `${score}`;
 
     let highscore = localStorage.getItem("highscore");
     if (highscore == null) {

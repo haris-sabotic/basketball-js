@@ -145,8 +145,6 @@ function runMain() {
         velocity = Vector.normalise(velocity);
         velocity = Vector.create(velocity.x * 50, velocity.y * 90);
 
-        SEND_WS_MESSAGE("shoot", { velocity });
-
         Body.setStatic(ball.body, false);
         Body.setVelocity(ball.body, velocity);
 
@@ -294,6 +292,8 @@ function runMain() {
                 ) {
                     canAddPoint = false;
 
+                    const prevScore = score;
+
                     let scoreType = "";
                     if (clearShot) {
                         scoreType = "two";
@@ -309,7 +309,7 @@ function runMain() {
                     let hoopRecording = RECORDING_HOOP;
                     ballRecording.push(ball.body.position);
                     hoopRecording.push(hoop.sensorBasket.position);
-                    SEND_WS_MESSAGE("scored", { ballRecording, hoopRecording, scoreType });
+                    SEND_WS_MESSAGE("scored", { ballRecording, hoopRecording, scoreType, prevScore });
 
                     RECORDING_BALL = [];
                     RECORDING_HOOP = [];

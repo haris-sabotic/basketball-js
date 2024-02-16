@@ -1,3 +1,5 @@
+const TOKEN = (new URLSearchParams(window.location.search)).get('token');
+
 const
     Vector = Matter.Vector,
     Events = Matter.Events,
@@ -58,25 +60,26 @@ let audioBackground = new Howl({
 
 // Create WebSocket connection.
 const WS = new WebSocket("ws://localhost:8000");
-let WS_ID = null;
+
+function SEND_WS_MESSAGE(tag, msg) {
+    let strMsg = JSON.stringify(msg);
+    let encryptedMsg = strMsg;
+    if (msg && msg.prevScore != null) {
+        console.log(msg.prevScore);
+        encryptedMsg = CryptoJS.AES.encrypt(strMsg, "0").toString();
+    }
+
+    WS.send(JSON.stringify({ authToken: TOKEN, tag, msg: encryptedMsg }));
+}
 
 WS.addEventListener("open", (event) => {
-    // Connection opened
+    SEND_WS_MESSAGE("new_client", null);
 });
 
 WS.addEventListener("message", (event) => {
     let message = JSON.parse(event.data);
-
     console.log(message);
-
-    if (message.tag == "id") {
-        WS_ID = message.id;
-    }
 });
-
-function SEND_WS_MESSAGE(tag, msg) {
-    WS.send(JSON.stringify({ id: WS_ID, tag, msg }));
-}
 
 let RECORDING_BALL = [];
 let RECORDING_HOOP = [];

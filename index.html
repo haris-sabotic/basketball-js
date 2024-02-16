@@ -1,126 +1,170 @@
-<!doctype html>
-<html>
+<!DOCTYPE html>
+<html lang="en">
 
 <head>
-    <script src="js/pixi.min.js"></script>
-    <script src="js/matter.min.js"></script>
-    <script src="js/howler.min.js"></script>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
 
     <style>
-        html,
-        body {
+        * {
             margin: 0;
             padding: 0;
-            background-color: black;
-            position: relative;
             font-family: sans-serif;
         }
 
-        .play-container {
-            width: 100vw;
-            height: 100vh;
+
+        body {
             display: flex;
-            justify-content: center;
-            align-items: center;
-        }
-
-        #play {
-            padding: 20px 50px;
-            font-size: 3rem;
-        }
-
-        .video-container {
-            width: 100vw;
             height: 100vh;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-        }
-
-        video {
-            width: 100%;
-        }
-
-        .finish-container {
             width: 100vw;
-            height: 100vh;
-            display: flex;
             flex-direction: column;
             justify-content: center;
-            align-items: center;
-            color: white;
         }
 
-        .score {
-            font-size: 4em;
+        .login-form,
+        .register-form {
+            display: flex;
+            flex-direction: column;
+
+            margin: 0 30px;
         }
 
-        .highscore {
-            font-size: 3em;
+        h1 {
+            text-align: center;
+            margin-bottom: 40px;
         }
 
-        #replay {
-            padding: 20px 50px;
-            font-size: 3rem;
+        input {
+            margin-bottom: 20px;
+            border: 1px solid black;
+            border-radius: 5px;
+            padding: 10px 20px;
+        }
+
+        label {
+            margin-bottom: 5px;
+        }
+
+        button {
+            margin: 20px 0;
+            border: 1px solid black;
+            border-radius: 5px;
+            padding: 10px 20px;
+            font-weight: bold;
+            background-color: lightgray;
+            color: black;
+        }
+
+        .login-instead,
+        .register-instead {
+            text-align: center;
+            padding: 5px;
+            color: rgb(26, 92, 92);
         }
 
         .hidden {
             display: none;
-            height: 0;
-        }
-
-        #refresh {
-            padding: 20px 50px;
-            font-size: 3rem;
         }
     </style>
 </head>
 
 <body>
-    <div class="play-container">
-        <button id="play">PLAY</button>
+    <div class="login-form">
+        <h1>PRIJAVA</h1>
+
+        <label for="login-username">Instagram korisničko ime:</label>
+        <input type="text" name="username" id="login-username">
+
+        <label for="login-password">Šifra:</label>
+        <input type="password" name="password" id="login-password">
+
+        <button type="button">PRIJAVI SE</button>
+
+        <p class="register-instead">Registruj se</p>
     </div>
 
-    <div class="video-container hidden">
-        <video id="splash">
-            <source src="assets/video.mp4" type="video/mp4">
-            Your browser does not support the video tag.
-        </video>
+    <div class="register-form hidden">
+        <h1>REGISTRACIJA</h1>
+
+        <label for="register-username">Instagram korisničko ime:</label>
+        <input type="text" name="username" id="register-username">
+
+        <label for="register-email">Email:</label>
+        <input type="email" name="email" id="register-email">
+
+        <label for="register-password">Šifra:</label>
+        <input type="password" name="password" id="register-password">
+
+        <button type="button">REGISTRUJ SE</button>
+
+        <p class="login-instead">Prijavi se</p>
     </div>
-
-    <div class="finish-container hidden">
-        <p class="score">SCORE: <span class="score-value"></span></p>
-        <p class="highscore">Highscore: <span class="highscore-value"></span></p>
-        <button id="refresh">REFRESH</button>
-    </div>
-
-
-    <script src="bootstrap.js"></script>
-    <script src="net.js"></script>
-    <script src="hoop.js"></script>
-    <script src="ball.js"></script>
-    <script src="finish.js"></script>
-    <script src="main.js"></script>
 
     <script>
-        let play = document.getElementById("play");
-        play.addEventListener("click", () => {
-            document.querySelector(".play-container").remove();
+        let loginForm = document.querySelector(".login-form");
+        let registerForm = document.querySelector(".register-form");
 
-            document.querySelector(".video-container").classList.remove("hidden");
+        document.querySelector(".register-instead").addEventListener("click", () => {
+            loginForm.classList.add("hidden");
+            registerForm.classList.remove("hidden");
+        });
+        document.querySelector(".login-instead").addEventListener("click", () => {
+            registerForm.classList.add("hidden");
+            loginForm.classList.remove("hidden");
+        });
 
-            let video = document.getElementById("splash");
-            console.log(video);
-            video.play();
+        const WS = new WebSocket("ws://localhost:8000");
 
-            video.addEventListener("ended", () => {
-                document.querySelector(".video-container").remove();
+        function SEND_WS_MESSAGE(tag, msg) {
+            WS.send(JSON.stringify({ tag, msg }));
+        }
 
-                runBootstrap();
-                runMain();
-                // window.location.href = "game.html";
+        WS.addEventListener("open", (event) => {
+            // Connection opened
+        });
+
+        WS.addEventListener("message", (event) => {
+            let message = JSON.parse(event.data);
+
+            console.log(message);
+
+            if (message.tag == "register") {
+                if (message.data.success) {
+                    window.location.href = `/game.html?token=${message.data.token}`;
+                } else {
+                    alert(message.data.message);
+                }
+            } else if (message.tag == "login") {
+                if (message.data.success) {
+                    window.location.href = `/game.html?token=${message.data.token}`;
+                } else {
+                    alert(message.data.message);
+                }
+            }
+        });
+
+        document.querySelector(".register-form > button").addEventListener("click", () => {
+            let username = document.querySelector("#register-username").value;
+            let email = document.querySelector("#register-email").value;
+            let password = document.querySelector("#register-password").value;
+
+            SEND_WS_MESSAGE("register", {
+                username,
+                email,
+                password,
             });
-        })
+        });
+
+        document.querySelector(".login-form > button").addEventListener("click", () => {
+            let username = document.querySelector("#login-username").value;
+            let password = document.querySelector("#login-password").value;
+
+            SEND_WS_MESSAGE("login", {
+                username,
+                password,
+            });
+        });
     </script>
 </body>
 
