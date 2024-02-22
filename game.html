@@ -17,7 +17,7 @@
             font-family: sans-serif;
         }
 
-        .loading-container {
+        .play-container {
             width: 100vw;
             height: 100vh;
             display: flex;
@@ -25,10 +25,14 @@
             align-items: center;
         }
 
-        .loading-container>p {
+        #play {
             padding: 20px 50px;
-            font-size: 3rem;
-            color: white;
+            font-size: 4rem;
+            font-weight: 900;
+            color: black;
+            background-color: white;
+            padding: 20px 50px;
+            border-radius: 20px;
         }
 
         .video-container {
@@ -86,8 +90,8 @@
 </head>
 
 <body>
-    <div class="loading-container">
-        <p>Loading...</p>
+    <div class="play-container">
+        <button id="play">PLAY</button>
     </div>
 
     <div class="video-container hidden">
@@ -121,8 +125,8 @@
     <script src="main.js"></script>
 
     <script>
-        setTimeout(() => {
-            document.querySelector(".loading-container").remove();
+        const playGame = () => {
+            document.querySelector(".play-container").remove();
 
             document.querySelector(".video-container").classList.remove("hidden");
 
@@ -136,7 +140,16 @@
                 runBootstrap();
                 runMain();
             });
-        }, 2000)
+        };
+
+        const urlParams = new URLSearchParams(window.location.search);
+        const autoPlay = urlParams.get('autoPlay');
+
+        if (autoPlay == "true") {
+            playGame();
+        } else {
+            document.querySelector("#play").addEventListener("click", playGame)
+        }
     </script>
 </body>
 

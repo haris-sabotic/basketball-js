@@ -34,6 +34,6 @@ const finish = () => {
     document.querySelector(".highscore-value").innerHTML = `${highscore}`;
 
     document.querySelector("#refresh").addEventListener("click", () => {
-        location.reload();
+        window.location.href = window.location.pathname + "?autoPlay=true";
     });
 };
