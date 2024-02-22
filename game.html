@@ -142,14 +142,7 @@
             });
         };
 
-        const urlParams = new URLSearchParams(window.location.search);
-        const autoPlay = urlParams.get('autoPlay');
-
-        if (autoPlay == "true") {
-            playGame();
-        } else {
-            document.querySelector("#play").addEventListener("click", playGame)
-        }
+        document.querySelector("#play").addEventListener("click", playGame)
     </script>
 </body>
 
