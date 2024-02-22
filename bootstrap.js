@@ -24,7 +24,7 @@ let MATTER_ENGINE;
 
 let BALL_TEXTURE = PIXI.Texture.from("assets/ball.png");
 let BOARD_TEXTURE = PIXI.Texture.from("assets/board.png");
-let BACKGROUND_TEXTURE = PIXI.Texture.from("assets/background.png");
+let BACKGROUND_TEXTURE = PIXI.Texture.from("assets/background.jpg");
 
 function runBootstrap() {
     PIXI_APP = new PIXI.Application({ background: '#1099bb', resizeTo: window });
@@ -59,7 +59,7 @@ let audioBackground = new Howl({
 
 
 // Create WebSocket connection.
-const WS = new WebSocket("ws://84.247.177.105:8000");
+const WS = new WebSocket("ws://127.0.0.1:8000");
 
 function SEND_WS_MESSAGE(tag, msg) {
     console.log(`SENDING MESSAGE (${tag})`, msg);

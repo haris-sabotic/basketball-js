@@ -1,8 +1,8 @@
 let score = 0;
 function runMain() {
     let background = new PIXI.Sprite(BACKGROUND_TEXTURE);
-    background.anchor.set(0.5);
-    background.x = SCREEN_WIDTH / 2;
+    background.anchor.set(0.0, 0.5);
+    background.x = 0;
     background.y = SCREEN_HEIGHT / 2;
     if (PIXI_APP.screen.width / PIXI_APP.screen.height < background.width / background.height) {
         let ratio = background.width / background.height;
@@ -190,7 +190,30 @@ function runMain() {
     let hoopVerticalDirection = 0;
     let hoopVerticalSpeed = 5;
 
+    const HULK_REVEAL_DISTANCE = 500;
+    const HULK_DOM = document.querySelector(".hulk");
+    let hulkDomRight = -500;
+    let desiredCameraXPos = 0;
+
     PIXI_APP.ticker.add((_delta) => {
+        if (PIXI_APP.stage.position.x != desiredCameraXPos) {
+            if (PIXI_APP.stage.position.x < desiredCameraXPos) {
+                const diff = desiredCameraXPos - PIXI_APP.stage.position.x;
+                const dist = Math.min(15, diff);
+
+                PIXI_APP.stage.position.x += dist;
+                hulkDomRight -= dist;
+                HULK_DOM.style.right = `${hulkDomRight}px`;
+            } else if (PIXI_APP.stage.position.x > desiredCameraXPos) {
+                const diff = PIXI_APP.stage.position.x - desiredCameraXPos;
+                const dist = Math.min(15, diff);
+
+                PIXI_APP.stage.position.x -= dist;
+                hulkDomRight += dist;
+                HULK_DOM.style.right = `${hulkDomRight}px`;
+            }
+        }
+
         if (enableMovingHorizontallyAfterEachPoint) {
             if (hoopHorizontalDirection == -1) {
                 if (hoop.centerPos().x <= hoopHorizontalLimit) {
@@ -219,8 +242,10 @@ function runMain() {
             hoopVerticalDirection = -1;
         }
 
-        hoop.moveHorizontally(hoopHorizontalDirection * hoopHorizontalSpeed);
-        hoop.moveVertically(hoopVerticalDirection * hoopVerticalSpeed);
+        if (!timerPaused) {
+            hoop.moveHorizontally(hoopHorizontalDirection * hoopHorizontalSpeed);
+            hoop.moveVertically(hoopVerticalDirection * hoopVerticalSpeed);
+        }
 
 
         ball.update();
@@ -318,29 +343,14 @@ function runMain() {
                         if (!hulkShownOnce) {
                             hulkShownOnce = true;
 
-                            let overlay = new PIXI.Sprite(PIXI.Texture.WHITE);
-                            overlay.tint = 0x000000;
-                            overlay.width = SCREEN_WIDTH;
-                            overlay.height = SCREEN_HEIGHT;
-                            overlay.zIndex = 500;
-                            let hulk = new PIXI.Sprite(PIXI.Texture.from("assets/hulk.mp4"));
-                            hulk.anchor.set(0.5);
-                            hulk.x = SCREEN_WIDTH / 2;
-                            hulk.y = SCREEN_HEIGHT / 2;
-                            hulk.zIndex = 500;
-
-                            PIXI_APP.stage.addChild(overlay);
-                            PIXI_APP.stage.addChild(hulk);
-
                             timerPaused = true;
-                            hulk.texture.baseTexture.resource.source.playbackRate = 2.0;
+                            desiredCameraXPos = -HULK_REVEAL_DISTANCE;
+                            document.querySelector(".hulk").setAttribute("src", "assets/hulk.gif");
 
-                            hulk.texture.baseTexture.resource.source.addEventListener("ended", () => {
-                                PIXI_APP.stage.removeChild(hulk);
-                                PIXI_APP.stage.removeChild(overlay);
-
+                            setTimeout(() => {
                                 timerPaused = false;
-                            });
+                                desiredCameraXPos = 0;
+                            }, 4500);
                         }
 
                         if (hoopHorizontalDirection == 0) {

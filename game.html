@@ -17,7 +17,7 @@
             font-family: sans-serif;
         }
 
-        .play-container {
+        .loading-container {
             width: 100vw;
             height: 100vh;
             display: flex;
@@ -25,9 +25,10 @@
             align-items: center;
         }
 
-        #play {
+        .loading-container>p {
             padding: 20px 50px;
             font-size: 3rem;
+            color: white;
         }
 
         .video-container {
@@ -74,12 +75,19 @@
             padding: 20px 50px;
             font-size: 3rem;
         }
+
+        .hulk {
+            position: fixed;
+            width: 500px;
+            bottom: 0;
+            right: -500px;
+        }
     </style>
 </head>
 
 <body>
-    <div class="play-container">
-        <button id="play">PLAY</button>
+    <div class="loading-container">
+        <p>Loading...</p>
     </div>
 
     <div class="video-container hidden">
@@ -95,6 +103,15 @@
         <button id="refresh">REFRESH</button>
     </div>
 
+    <img src="" alt="" class="hulk">
+
+    <script>
+        // PRELOAD HULK GIF
+
+        let HULK_GIF = new Image();
+        HULK_GIF.src = "assets/hulk.gif";
+    </script>
+
 
     <script src="bootstrap.js"></script>
     <script src="net.js"></script>
@@ -104,9 +121,8 @@
     <script src="main.js"></script>
 
     <script>
-        let play = document.getElementById("play");
-        play.addEventListener("click", () => {
-            document.querySelector(".play-container").remove();
+        setTimeout(() => {
+            document.querySelector(".loading-container").remove();
 
             document.querySelector(".video-container").classList.remove("hidden");
 
@@ -119,9 +135,8 @@
 
                 runBootstrap();
                 runMain();
-                // window.location.href = "game.html";
             });
-        })
+        }, 2000)
     </script>
 </body>
 
