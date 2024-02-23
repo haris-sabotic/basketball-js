@@ -41,6 +41,14 @@ function runMain() {
         audioBackgroundPlaying = true;
     }
 
+    document.addEventListener("visibilitychange", () => {
+        if (document.hidden) {
+            audioBackground.pause();
+        } else {
+            audioBackground.play();
+        }
+    });
+
 
 
     score = 0;
