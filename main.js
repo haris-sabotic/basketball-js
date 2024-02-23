@@ -17,7 +17,7 @@ function runMain() {
     PIXI_APP.stage.addChild(background);
 
     let bodyGround = Bodies.rectangle(
-        0, SCREEN_HEIGHT / 2 + 1000,
+        0, SCREEN_HEIGHT - 80,
         999999, 300,
         { isStatic: true, label: "ground" }
     );
