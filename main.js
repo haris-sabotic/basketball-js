@@ -164,7 +164,7 @@ function runMain() {
 
     let lastTouchMovePos = Vector.create(0, 0);
     CANVAS.addEventListener("touchstart", (e) => {
-        if (!ballFlying) {
+        if (!ballFlying && !timerPaused) {
             touchStartMousePos.x = e.touches[0].screenX;
             touchStartMousePos.y = e.touches[0].screenY;
 
@@ -173,7 +173,7 @@ function runMain() {
         }
     });
     CANVAS.addEventListener("touchmove", (e) => {
-        if (!ballFlying) {
+        if (!ballFlying && !timerPaused) {
             Body.setPosition(ball.body, Vector.create(
                 touchStartBallPos.x + (e.touches[0].screenX - touchStartMousePos.x),
                 touchStartBallPos.y + (e.touches[0].screenY - touchStartMousePos.y)
@@ -187,7 +187,7 @@ function runMain() {
         }
     });
     CANVAS.addEventListener("touchend", (e) => {
-        if (!ballFlying) {
+        if (!ballFlying && !timerPaused) {
             shootBall(lastTouchMovePos.x, lastTouchMovePos.y);
         }
     });
