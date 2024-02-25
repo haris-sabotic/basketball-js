@@ -138,26 +138,28 @@ function runMain() {
     SETUP_HOOP();
 
     const shootBall = (x, y) => {
-        RECORDING_BALL = [];
-        RECORDING_HOOP = [];
+        if (!timerPaused) {
+            RECORDING_BALL = [];
+            RECORDING_HOOP = [];
 
-        audioBallWhoosh.play();
-        clearShot = true;
-        touchedGroundOnce = false;
-        canAddPoint = true;
+            audioBallWhoosh.play();
+            clearShot = true;
+            touchedGroundOnce = false;
+            canAddPoint = true;
 
-        let velocity = Vector.sub(
-            Vector.create(x, y),
-            touchStartMousePos
-        );
-        velocity = Vector.normalise(velocity);
-        velocity = Vector.create(velocity.x * 50, velocity.y * 90);
+            let velocity = Vector.sub(
+                Vector.create(x, y),
+                touchStartMousePos
+            );
+            velocity = Vector.normalise(velocity);
+            velocity = Vector.create(velocity.x * 50, velocity.y * 90);
 
-        Body.setStatic(ball.body, false);
-        Body.setVelocity(ball.body, velocity);
+            Body.setStatic(ball.body, false);
+            Body.setVelocity(ball.body, velocity);
 
-        ballFlying = true;
-        currentlyDragging = false;
+            ballFlying = true;
+            currentlyDragging = false;
+        }
     };
 
     let lastTouchMovePos = Vector.create(0, 0);
