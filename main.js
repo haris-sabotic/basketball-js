@@ -200,28 +200,25 @@ function runMain() {
     let hoopVerticalDirection = 0;
     let hoopVerticalSpeed = 5;
 
-    const HULK_REVEAL_DISTANCE = 500;
+    const HULK_HIDDEN_POSITION = -500;
+    const HULK_REVEALED_POSITION = -200;
     const HULK_DOM = document.querySelector(".hulk");
-    let hulkDomRight = -500;
-    let desiredCameraXPos = 0;
+    let hulkCurrentPosition = HULK_HIDDEN_POSITION;
+    let hulkDesiredPosition = HULK_HIDDEN_POSITION;
 
     PIXI_APP.ticker.add((_delta) => {
-        if (PIXI_APP.stage.position.x != desiredCameraXPos) {
-            if (PIXI_APP.stage.position.x < desiredCameraXPos) {
-                const diff = desiredCameraXPos - PIXI_APP.stage.position.x;
-                const dist = Math.min(15, diff);
+        if (hulkCurrentPosition < hulkDesiredPosition) {
+            const diff = hulkDesiredPosition - hulkCurrentPosition;
+            const dist = Math.min(15, diff);
 
-                PIXI_APP.stage.position.x += dist;
-                hulkDomRight -= dist;
-                HULK_DOM.style.right = `${hulkDomRight}px`;
-            } else if (PIXI_APP.stage.position.x > desiredCameraXPos) {
-                const diff = PIXI_APP.stage.position.x - desiredCameraXPos;
-                const dist = Math.min(15, diff);
+            hulkCurrentPosition += dist;
+            HULK_DOM.style.right = `${hulkCurrentPosition}px`;
+        } else if (hulkCurrentPosition > hulkDesiredPosition) {
+            const diff = hulkCurrentPosition - hulkDesiredPosition;
+            const dist = Math.min(15, diff);
 
-                PIXI_APP.stage.position.x -= dist;
-                hulkDomRight += dist;
-                HULK_DOM.style.right = `${hulkDomRight}px`;
-            }
+            hulkCurrentPosition -= dist;
+            HULK_DOM.style.right = `${hulkCurrentPosition}px`;
         }
 
         if (enableMovingHorizontallyAfterEachPoint) {
@@ -354,12 +351,12 @@ function runMain() {
                             hulkShownOnce = true;
 
                             timerPaused = true;
-                            desiredCameraXPos = -HULK_REVEAL_DISTANCE;
+                            hulkDesiredPosition = HULK_REVEALED_POSITION;
                             document.querySelector(".hulk").setAttribute("src", "assets/hulk.gif");
 
                             setTimeout(() => {
                                 timerPaused = false;
-                                desiredCameraXPos = 0;
+                                hulkDesiredPosition = HULK_HIDDEN_POSITION;
                             }, 4500);
                         }
 
