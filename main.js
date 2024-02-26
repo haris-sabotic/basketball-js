@@ -346,7 +346,7 @@ function runMain() {
                     RECORDING_BALL = [];
                     RECORDING_HOOP = [];
 
-                    if (score >= 2 && score < 20) {
+                    if (score >= 10 && score < 20) {
                         if (!hulkShownOnce) {
                             hulkShownOnce = true;
 
