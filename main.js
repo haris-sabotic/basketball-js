@@ -200,8 +200,8 @@ function runMain() {
     let hoopVerticalDirection = 0;
     let hoopVerticalSpeed = 5;
 
-    const HULK_HIDDEN_POSITION = -500;
-    const HULK_REVEALED_POSITION = -200;
+    const HULK_HIDDEN_POSITION = -600;
+    const HULK_REVEALED_POSITION = -300;
     const HULK_DOM = document.querySelector(".hulk");
     let hulkCurrentPosition = HULK_HIDDEN_POSITION;
     let hulkDesiredPosition = HULK_HIDDEN_POSITION;
@@ -357,7 +357,7 @@ function runMain() {
                             setTimeout(() => {
                                 timerPaused = false;
                                 hulkDesiredPosition = HULK_HIDDEN_POSITION;
-                            }, 2800);
+                            }, 3000);
                         }
 
                         if (hoopHorizontalDirection == 0) {
