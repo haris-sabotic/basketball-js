@@ -357,7 +357,7 @@ function runMain() {
                             setTimeout(() => {
                                 timerPaused = false;
                                 hulkDesiredPosition = HULK_HIDDEN_POSITION;
-                            }, 3000);
+                            }, 2500);
                         }
 
                         if (hoopHorizontalDirection == 0) {
