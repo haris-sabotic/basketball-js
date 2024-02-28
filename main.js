@@ -200,7 +200,7 @@ function runMain() {
     let hoopVerticalDirection = 0;
     let hoopVerticalSpeed = 5;
 
-    const HULK_HIDDEN_POSITION = -700;
+    const HULK_HIDDEN_POSITION = -900;
     const HULK_REVEALED_POSITION = -300;
     const HULK_CONTAINER_DOM = document.querySelector(".hulk-container");
     const HULK_DOM = document.querySelector(".hulk");
@@ -363,7 +363,7 @@ function runMain() {
                     RECORDING_BALL = [];
                     RECORDING_HOOP = [];
 
-                    if (score >= 1 && score < 20) {
+                    if (score >= 10 && score < 20) {
                         if (!hulkShownOnce) {
                             hulkShownOnce = true;
 
