@@ -81,11 +81,17 @@
         }
 
         .hulk {
+            height: 700px;
+        }
+
+        .hulk-container {
             position: fixed;
-            width: 700px;
-            bottom: 100px;
-            right: -600px;
-            transform: rotate(-50deg);
+            height: 700px;
+            bottom: -700px;
+            margin-left: auto;
+            margin-right: auto;
+            text-align: center;
+            width: 100vw;
         }
     </style>
 </head>
@@ -108,7 +114,9 @@
         <button id="refresh">REFRESH</button>
     </div>
 
-    <img src="" alt="" class="hulk">
+    <div class="hulk-container">
+        <img src="" alt="" class="hulk">
+    </div>
 
     <script>
         // PRELOAD HULK GIF

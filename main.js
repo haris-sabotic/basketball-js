@@ -200,8 +200,9 @@ function runMain() {
     let hoopVerticalDirection = 0;
     let hoopVerticalSpeed = 5;
 
-    const HULK_HIDDEN_POSITION = -600;
+    const HULK_HIDDEN_POSITION = -700;
     const HULK_REVEALED_POSITION = -300;
+    const HULK_CONTAINER_DOM = document.querySelector(".hulk-container");
     const HULK_DOM = document.querySelector(".hulk");
     let hulkCurrentPosition = HULK_HIDDEN_POSITION;
     let hulkDesiredPosition = HULK_HIDDEN_POSITION;
@@ -212,13 +213,23 @@ function runMain() {
             const dist = Math.min(15, diff);
 
             hulkCurrentPosition += dist;
-            HULK_DOM.style.right = `${hulkCurrentPosition}px`;
+            HULK_CONTAINER_DOM.style.bottom = `${hulkCurrentPosition}px`;
+
+            if (hulkCurrentPosition == HULK_HIDDEN_POSITION) {
+                ball.sprite.visible = true;
+                audioBackground.play();
+            }
         } else if (hulkCurrentPosition > hulkDesiredPosition) {
             const diff = hulkCurrentPosition - hulkDesiredPosition;
             const dist = Math.min(15, diff);
 
             hulkCurrentPosition -= dist;
-            HULK_DOM.style.right = `${hulkCurrentPosition}px`;
+            HULK_CONTAINER_DOM.style.bottom = `${hulkCurrentPosition}px`;
+
+            if (hulkCurrentPosition == HULK_HIDDEN_POSITION) {
+                ball.sprite.visible = true;
+                audioBackground.play();
+            }
         }
 
         if (enableMovingHorizontallyAfterEachPoint) {
@@ -303,6 +314,12 @@ function runMain() {
                         audioGroundBounce.play();
                         ball.deleteSelf(PIXI_APP, MATTER_ENGINE);
                         SETUP_BALL();
+
+                        // hide ball if hulk is shown on screen
+                        if (hulkCurrentPosition != HULK_HIDDEN_POSITION) {
+                            ball.sprite.visible = false;
+                        }
+
                         RECORDING_BALL = [];
                         RECORDING_HOOP = [];
                     } else {
@@ -346,13 +363,14 @@ function runMain() {
                     RECORDING_BALL = [];
                     RECORDING_HOOP = [];
 
-                    if (score >= 10 && score < 20) {
+                    if (score >= 1 && score < 20) {
                         if (!hulkShownOnce) {
                             hulkShownOnce = true;
 
                             timerPaused = true;
+                            audioBackground.pause();
                             hulkDesiredPosition = HULK_REVEALED_POSITION;
-                            document.querySelector(".hulk").setAttribute("src", "assets/hulk.gif");
+                            HULK_DOM.setAttribute("src", "assets/hulk.gif");
 
                             setTimeout(() => {
                                 timerPaused = false;
