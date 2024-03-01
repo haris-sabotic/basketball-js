@@ -59,7 +59,7 @@ let audioBackground = new Howl({
 
 
 // Create WebSocket connection.
-const WS = new WebSocket(URL);
+const WS = new WebSocket(WS_URL);
 
 function SEND_WS_MESSAGE(tag, msg) {
     console.log(`SENDING MESSAGE (${tag})`, msg);

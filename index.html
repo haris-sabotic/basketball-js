@@ -145,7 +145,7 @@
         });
       });
 
-      const WS = new WebSocket(URL);
+      const WS = new WebSocket(WS_URL);
 
       function SEND_WS_MESSAGE(tag, msg) {
         WS.send(JSON.stringify({ tag, msg }));
