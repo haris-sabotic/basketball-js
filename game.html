@@ -93,6 +93,21 @@
             text-align: center;
             width: 100vw;
         }
+        
+        .hulk-name-container {
+            position: fixed;
+            width: 100vw;
+            bottom: 750px;
+            left: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            pointer-events: none
+        }
+
+        .hulk-name {
+            width: 600px;
+        }
     </style>
 </head>
 
@@ -117,12 +132,19 @@
     <div class="hulk-container">
         <img src="" alt="" class="hulk">
     </div>
+    
+    <div class="hulk-name-container">
+        <img src="" alt="" class="hulk-name">
+    </div>
 
     <script>
         // PRELOAD HULK GIF
-
         let HULK_GIF = new Image();
         HULK_GIF.src = "assets/hulk.gif";
+        
+        // PRELOAD HULK NAME GIF
+        let HULK_NAME_GIF = new Image();
+        HULK_NAME_GIF.src = "assets/hulk_name.gif";
     </script>
 
 

@@ -151,6 +151,11 @@ function runMain() {
                 Vector.create(x, y),
                 touchStartMousePos
             );
+
+            if (Math.abs(velocity.y) < 2) {
+                return;
+            }
+
             velocity = Vector.normalise(velocity);
             velocity = Vector.create(velocity.x * 50, velocity.y * 90);
 
@@ -204,6 +209,7 @@ function runMain() {
     const HULK_REVEALED_POSITION = -300;
     const HULK_CONTAINER_DOM = document.querySelector(".hulk-container");
     const HULK_DOM = document.querySelector(".hulk");
+    const HULK_NAME_DOM = document.querySelector(".hulk-name");
     let hulkCurrentPosition = HULK_HIDDEN_POSITION;
     let hulkDesiredPosition = HULK_HIDDEN_POSITION;
 
@@ -218,6 +224,11 @@ function runMain() {
             if (hulkCurrentPosition == HULK_HIDDEN_POSITION) {
                 ball.sprite.visible = true;
                 audioBackground.play();
+            } else if (hulkCurrentPosition == HULK_REVEALED_POSITION) {
+                HULK_NAME_DOM.setAttribute("src", "assets/hulk_name.gif");
+                setTimeout(() => {
+                    HULK_NAME_DOM.style.display = "none";
+                }, 2700);
             }
         } else if (hulkCurrentPosition > hulkDesiredPosition) {
             const diff = hulkCurrentPosition - hulkDesiredPosition;
@@ -229,6 +240,11 @@ function runMain() {
             if (hulkCurrentPosition == HULK_HIDDEN_POSITION) {
                 ball.sprite.visible = true;
                 audioBackground.play();
+            } else if (hulkCurrentPosition == HULK_REVEALED_POSITION) {
+                HULK_NAME_DOM.setAttribute("src", "assets/hulk_name.gif");
+                setTimeout(() => {
+                    HULK_NAME_DOM.style.display = "none";
+                }, 2700);
             }
         }
 
@@ -363,7 +379,7 @@ function runMain() {
                     RECORDING_BALL = [];
                     RECORDING_HOOP = [];
 
-                    if (score >= 10 && score < 20) {
+                    if (score >= 1 && score < 20) {
                         if (!hulkShownOnce) {
                             hulkShownOnce = true;
 
