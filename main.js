@@ -213,6 +213,7 @@ function runMain() {
     const HULK_CONTAINER_DOM = document.querySelector(".hulk-container");
     const HULK_DOM = document.querySelector(".hulk");
     const HULK_NAME_DOM = document.querySelector(".hulk-name");
+    const OVERLAY_DOM = document.querySelector(".overlay");
     let hulkCurrentPosition = HULK_HIDDEN_POSITION;
     let hulkDesiredPosition = HULK_HIDDEN_POSITION;
 
@@ -227,6 +228,8 @@ function runMain() {
             if (hulkCurrentPosition == HULK_HIDDEN_POSITION) {
                 ball.sprite.visible = true;
                 audioBackground.play();
+                OVERLAY_DOM.classList.remove("fade-in");
+                OVERLAY_DOM.classList.add("fade-out");
             } else if (hulkCurrentPosition == HULK_REVEALED_POSITION) {
                 HULK_NAME_DOM.setAttribute("src", "assets/hulk_name.gif");
                 setTimeout(() => {
@@ -243,6 +246,8 @@ function runMain() {
             if (hulkCurrentPosition == HULK_HIDDEN_POSITION) {
                 ball.sprite.visible = true;
                 audioBackground.play();
+                OVERLAY_DOM.classList.remove("fade-in");
+                OVERLAY_DOM.classList.add("fade-out");
             } else if (hulkCurrentPosition == HULK_REVEALED_POSITION) {
                 HULK_NAME_DOM.setAttribute("src", "assets/hulk_name.gif");
                 setTimeout(() => {
@@ -390,6 +395,7 @@ function runMain() {
                             audioBackground.pause();
                             hulkDesiredPosition = HULK_REVEALED_POSITION;
                             HULK_DOM.setAttribute("src", "assets/hulk.gif");
+                            OVERLAY_DOM.classList.add("fade-in");
 
                             setTimeout(() => {
                                 timerPaused = false;

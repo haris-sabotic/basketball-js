@@ -113,6 +113,30 @@
         width: 600px;
         user-select: none;
       }
+
+      .overlay {
+        margin: 0;
+        padding: 0;
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100vw;
+        height: 100vh;
+        pointer-events: none;
+        user-select: none;
+        background-color: black;
+        opacity: 0;
+      }
+
+      .fade-in {
+        opacity: 0.5;
+        transition: 1s;
+      }
+
+      .fade-out {
+        opacity: 0;
+        transition: 1s;
+      }
     </style>
   </head>
 
@@ -133,6 +157,8 @@
       <p class="highscore">Highscore: <span class="highscore-value"></span></p>
       <button id="refresh">REFRESH</button>
     </div>
+
+    <div class="overlay"></div>
 
     <div class="hulk-container">
       <img src="" alt="" class="hulk" />
