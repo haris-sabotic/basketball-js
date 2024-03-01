@@ -75,11 +75,22 @@ function SEND_WS_MESSAGE(tag, msg) {
 
 WS.addEventListener("open", (event) => {
     SEND_WS_MESSAGE("new_client", null);
+    SEND_WS_MESSAGE("games_played", null);
 });
 
 WS.addEventListener("message", (event) => {
     let message = JSON.parse(event.data);
     console.log(message);
+
+    if (message.tag == "games_played") {
+        const gamesLeft = 10 - message.gamesPlayed;
+        if (gamesLeft <= 0) {
+            document.querySelector(".play-container > p").innerHTML = "Ne možete igrati više";
+            document.querySelector("#play").remove();
+        } else {
+            document.querySelector("#games-left").innerHTML = gamesLeft;
+        }
+    }
 });
 
 let RECORDING_BALL = [];

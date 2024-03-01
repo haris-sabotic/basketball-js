@@ -22,8 +22,14 @@
         width: 100vw;
         height: 100vh;
         display: flex;
+        flex-direction: column;
         justify-content: center;
         align-items: center;
+      }
+
+      .play-container > p {
+        color: white;
+        font-size: 3.5rem;
       }
 
       #play {
@@ -142,6 +148,7 @@
 
   <body>
     <div class="play-container">
+      <p>Možete igrati još <span id="games-left">_</span> puta.</p>
       <button id="play">PLAY</button>
     </div>
 
