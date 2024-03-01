@@ -1,157 +1,158 @@
-<!doctype html>
+<!DOCTYPE html>
 <html>
+  <head>
+    <title>Document</title>
 
-<head>
     <script src="js/pixi.min.js"></script>
     <script src="js/matter.min.js"></script>
     <script src="js/howler.min.js"></script>
     <script src="js/aes.js"></script>
 
     <style>
-        html,
-        body {
-            margin: 0;
-            padding: 0;
-            background-color: black;
-            position: relative;
-            font-family: sans-serif;
-        }
+      html,
+      body {
+        margin: 0;
+        padding: 0;
+        background-color: black;
+        position: relative;
+        font-family: sans-serif;
+      }
 
-        .play-container {
-            width: 100vw;
-            height: 100vh;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-        }
+      .play-container {
+        width: 100vw;
+        height: 100vh;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+      }
 
-        #play {
-            padding: 20px 50px;
-            font-size: 4rem;
-            font-weight: 900;
-            color: black;
-            background-color: white;
-            padding: 20px 50px;
-            border-radius: 20px;
-        }
+      #play {
+        padding: 20px 50px;
+        font-size: 4rem;
+        font-weight: 900;
+        color: black;
+        background-color: white;
+        padding: 20px 50px;
+        border-radius: 20px;
+      }
 
-        .video-container {
-            width: 100vw;
-            height: 100vh;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-        }
+      .video-container {
+        width: 100vw;
+        height: 100vh;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+      }
 
-        video {
-            width: 100%;
-        }
+      video {
+        width: 100%;
+      }
 
-        .finish-container {
-            width: 100vw;
-            height: 100vh;
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            align-items: center;
-            color: white;
-        }
+      .finish-container {
+        width: 100vw;
+        height: 100vh;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        color: white;
+      }
 
-        .score {
-            font-size: 4em;
-        }
+      .score {
+        font-size: 4em;
+      }
 
-        .highscore {
-            font-size: 3em;
-        }
+      .highscore {
+        font-size: 3em;
+      }
 
-        .hidden {
-            display: none;
-            height: 0;
-        }
+      .hidden {
+        display: none;
+        height: 0;
+      }
 
-        #refresh {
-            padding: 20px 50px;
-            font-size: 4rem;
-            font-weight: 900;
-            color: black;
-            background-color: white;
-            padding: 20px 50px;
-            border-radius: 20px;
-        }
+      #refresh {
+        padding: 20px 50px;
+        font-size: 4rem;
+        font-weight: 900;
+        color: black;
+        background-color: white;
+        padding: 20px 50px;
+        border-radius: 20px;
+      }
 
-        .hulk {
-            height: 700px;
-            user-select: none;
-        }
+      .hulk {
+        height: 700px;
+        user-select: none;
+      }
 
-        .hulk-container {
-            position: fixed;
-            height: 900px;
-            bottom: -900px;
-            margin-left: auto;
-            margin-right: auto;
-            text-align: center;
-            width: 100vw;
-            user-select: none;
-        }
-        
-        .hulk-name-container {
-            position: fixed;
-            width: 100vw;
-            bottom: 750px;
-            left: 0;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            pointer-events: none;
-            user-select: none;
-        }
+      .hulk-container {
+        position: fixed;
+        height: 900px;
+        bottom: -900px;
+        margin-left: auto;
+        margin-right: auto;
+        text-align: center;
+        width: 100vw;
+        user-select: none;
+      }
 
-        .hulk-name {
-            width: 600px;
-            user-select: none;
-        }
+      .hulk-name-container {
+        position: fixed;
+        width: 100vw;
+        bottom: 750px;
+        left: 0;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        pointer-events: none;
+        user-select: none;
+      }
+
+      .hulk-name {
+        width: 600px;
+        user-select: none;
+      }
     </style>
-</head>
+  </head>
 
-<body>
+  <body>
     <div class="play-container">
-        <button id="play">PLAY</button>
+      <button id="play">PLAY</button>
     </div>
 
     <div class="video-container hidden">
-        <video id="splash">
-            <source src="assets/video.mp4" type="video/mp4">
-            Your browser does not support the video tag.
-        </video>
+      <video id="splash">
+        <source src="assets/video.mp4" type="video/mp4" />
+        Your browser does not support the video tag.
+      </video>
     </div>
 
     <div class="finish-container hidden">
-        <p class="score">SCORE: <span class="score-value">Loading...</span></p>
-        <p class="highscore">Highscore: <span class="highscore-value"></span></p>
-        <button id="refresh">REFRESH</button>
+      <p class="score">SCORE: <span class="score-value">Loading...</span></p>
+      <p class="highscore">Highscore: <span class="highscore-value"></span></p>
+      <button id="refresh">REFRESH</button>
     </div>
 
     <div class="hulk-container">
-        <img src="" alt="" class="hulk">
+      <img src="" alt="" class="hulk" />
     </div>
-    
+
     <div class="hulk-name-container">
-        <img src="" alt="" class="hulk-name">
+      <img src="" alt="" class="hulk-name" />
     </div>
 
     <script>
-        // PRELOAD HULK GIF
-        let HULK_GIF = new Image();
-        HULK_GIF.src = "assets/hulk.gif";
-        
-        // PRELOAD HULK NAME GIF
-        let HULK_NAME_GIF = new Image();
-        HULK_NAME_GIF.src = "assets/hulk_name.gif";
+      // PRELOAD HULK GIF
+      let HULK_GIF = new Image();
+      HULK_GIF.src = "assets/hulk.gif";
+
+      // PRELOAD HULK NAME GIF
+      let HULK_NAME_GIF = new Image();
+      HULK_NAME_GIF.src = "assets/hulk_name.gif";
     </script>
 
-
+    <script src="url.js"></script>
     <script src="bootstrap.js"></script>
     <script src="net.js"></script>
     <script src="hoop.js"></script>
@@ -160,25 +161,24 @@
     <script src="main.js"></script>
 
     <script>
-        const playGame = () => {
-            document.querySelector(".play-container").remove();
+      const playGame = () => {
+        document.querySelector(".play-container").remove();
 
-            document.querySelector(".video-container").classList.remove("hidden");
+        document.querySelector(".video-container").classList.remove("hidden");
 
-            let video = document.getElementById("splash");
-            console.log(video);
-            video.play();
+        let video = document.getElementById("splash");
+        console.log(video);
+        video.play();
 
-            video.addEventListener("ended", () => {
-                document.querySelector(".video-container").remove();
+        video.addEventListener("ended", () => {
+          document.querySelector(".video-container").remove();
 
-                runBootstrap();
-                runMain();
-            });
-        };
+          runBootstrap();
+          runMain();
+        });
+      };
 
-        document.querySelector("#play").addEventListener("click", playGame)
+      document.querySelector("#play").addEventListener("click", playGame);
     </script>
-</body>
-
+  </body>
 </html>

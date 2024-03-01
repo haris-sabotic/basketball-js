@@ -1,171 +1,217 @@
 <!DOCTYPE html>
 <html lang="en">
-
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>LOB Basket</title>
 
     <style>
-        * {
-            margin: 0;
-            padding: 0;
-            font-family: sans-serif;
-        }
+      * {
+        margin: 0;
+        padding: 0;
+        font-family: sans-serif;
+      }
 
+      body {
+        display: flex;
+        height: 100vh;
+        width: 100vw;
+        flex-direction: column;
+        justify-content: center;
+      }
 
-        body {
-            display: flex;
-            height: 100vh;
-            width: 100vw;
-            flex-direction: column;
-            justify-content: center;
-        }
+      .login-form,
+      .register-form,
+      .reset-form {
+        display: flex;
+        flex-direction: column;
 
-        .login-form,
-        .register-form {
-            display: flex;
-            flex-direction: column;
+        margin: 0 30px;
+      }
 
-            margin: 0 30px;
-        }
+      h1 {
+        text-align: center;
+        margin-bottom: 40px;
+      }
 
-        h1 {
-            text-align: center;
-            margin-bottom: 40px;
-        }
+      input {
+        margin-bottom: 20px;
+        border: 1px solid black;
+        border-radius: 5px;
+        padding: 10px 20px;
+      }
 
-        input {
-            margin-bottom: 20px;
-            border: 1px solid black;
-            border-radius: 5px;
-            padding: 10px 20px;
-        }
+      label {
+        margin-bottom: 5px;
+      }
 
-        label {
-            margin-bottom: 5px;
-        }
+      button {
+        margin: 20px 0;
+        border: 1px solid black;
+        border-radius: 5px;
+        padding: 10px 20px;
+        font-weight: bold;
+        background-color: lightgray;
+        color: black;
+      }
 
-        button {
-            margin: 20px 0;
-            border: 1px solid black;
-            border-radius: 5px;
-            padding: 10px 20px;
-            font-weight: bold;
-            background-color: lightgray;
-            color: black;
-        }
+      .login-instead,
+      .register-instead,
+      .reset-instead {
+        text-align: center;
+        padding: 5px;
+        color: rgb(26, 92, 92);
+      }
 
-        .login-instead,
-        .register-instead {
-            text-align: center;
-            padding: 5px;
-            color: rgb(26, 92, 92);
-        }
-
-        .hidden {
-            display: none;
-        }
+      .hidden {
+        display: none;
+      }
     </style>
-</head>
+  </head>
 
-<body>
+  <body>
     <div class="login-form">
-        <h1>PRIJAVA</h1>
+      <h1>PRIJAVA</h1>
 
-        <label for="login-username">Instagram korisničko ime:</label>
-        <input type="text" name="username" id="login-username">
+      <label for="login-username">Instagram korisničko ime:</label>
+      <input type="text" name="username" id="login-username" />
 
-        <label for="login-password">Šifra:</label>
-        <input type="password" name="password" id="login-password">
+      <label for="login-password">Šifra:</label>
+      <input type="password" name="password" id="login-password" />
 
-        <button type="button">PRIJAVI SE</button>
+      <button type="button">PRIJAVI SE</button>
 
-        <p class="register-instead">Registruj se</p>
+      <p class="reset-instead">Resetuj lozinku</p>
+      <p class="register-instead">Registruj se</p>
     </div>
 
     <div class="register-form hidden">
-        <h1>REGISTRACIJA</h1>
+      <h1>REGISTRACIJA</h1>
 
-        <label for="register-username">Instagram korisničko ime:</label>
-        <input type="text" name="username" id="register-username">
+      <label for="register-username">Instagram korisničko ime:</label>
+      <input type="text" name="username" id="register-username" />
 
-        <label for="register-email">Email:</label>
-        <input type="email" name="email" id="register-email">
+      <label for="register-email">Email:</label>
+      <input type="email" name="email" id="register-email" />
 
-        <label for="register-password">Šifra:</label>
-        <input type="password" name="password" id="register-password">
+      <label for="register-password">Šifra:</label>
+      <input type="password" name="password" id="register-password" />
 
-        <button type="button">REGISTRUJ SE</button>
+      <button type="button">REGISTRUJ SE</button>
 
-        <p class="login-instead">Prijavi se</p>
+      <p class="reset-instead">Resetuj lozinku</p>
+      <p class="login-instead">Prijavi se</p>
     </div>
 
+    <div class="reset-form hidden">
+      <h1>RESETOVANJE LOZINKE</h1>
+
+      <label for="reset-email">Email:</label>
+      <input type="email" name="email" id="reset-email" />
+
+      <button type="button">POŠALJI MAIL ZA RESET LOZINKE</button>
+
+      <p class="login-instead">Prijavi se</p>
+    </div>
+
+    <script src="url.js"></script>
     <script>
-        let loginForm = document.querySelector(".login-form");
-        let registerForm = document.querySelector(".register-form");
+      let loginForm = document.querySelector(".login-form");
+      let registerForm = document.querySelector(".register-form");
+      let resetForm = document.querySelector(".reset-form");
 
-        document.querySelector(".register-instead").addEventListener("click", () => {
-            loginForm.classList.add("hidden");
-            registerForm.classList.remove("hidden");
+      document.querySelectorAll(".register-instead").forEach((el) => {
+        el.addEventListener("click", () => {
+          loginForm.classList.add("hidden");
+          resetForm.classList.add("hidden");
+
+          registerForm.classList.remove("hidden");
         });
-        document.querySelector(".login-instead").addEventListener("click", () => {
-            registerForm.classList.add("hidden");
-            loginForm.classList.remove("hidden");
+      });
+      document.querySelectorAll(".login-instead").forEach((el) => {
+        el.addEventListener("click", () => {
+          registerForm.classList.add("hidden");
+          resetForm.classList.add("hidden");
+
+          loginForm.classList.remove("hidden");
         });
+      });
+      document.querySelectorAll(".reset-instead").forEach((el) => {
+        el.addEventListener("click", () => {
+          registerForm.classList.add("hidden");
+          loginForm.classList.add("hidden");
 
-        const WS = new WebSocket("ws://84.247.177.105:8000");
+          resetForm.classList.remove("hidden");
+        });
+      });
 
-        function SEND_WS_MESSAGE(tag, msg) {
-            WS.send(JSON.stringify({ tag, msg }));
+      const WS = new WebSocket(URL);
+
+      function SEND_WS_MESSAGE(tag, msg) {
+        WS.send(JSON.stringify({ tag, msg }));
+      }
+
+      WS.addEventListener("open", (event) => {
+        // Connection opened
+      });
+
+      WS.addEventListener("message", (event) => {
+        let message = JSON.parse(event.data);
+
+        console.log(message);
+
+        if (message.tag == "register") {
+          if (message.data.success) {
+            window.location.href = `/game.html?token=${message.data.token}`;
+          } else {
+            alert(message.data.message);
+          }
+        } else if (message.tag == "login") {
+          if (message.data.success) {
+            window.location.href = `/game.html?token=${message.data.token}`;
+          } else {
+            alert(message.data.message);
+          }
+        } else if (message.tag == "forgot_password") {
+          alert(message.data.message);
         }
+      });
 
-        WS.addEventListener("open", (event) => {
-            // Connection opened
+      document
+        .querySelector(".register-form > button")
+        .addEventListener("click", () => {
+          let username = document.querySelector("#register-username").value;
+          let email = document.querySelector("#register-email").value;
+          let password = document.querySelector("#register-password").value;
+
+          SEND_WS_MESSAGE("register", {
+            username,
+            email,
+            password,
+          });
         });
 
-        WS.addEventListener("message", (event) => {
-            let message = JSON.parse(event.data);
+      document
+        .querySelector(".login-form > button")
+        .addEventListener("click", () => {
+          let username = document.querySelector("#login-username").value;
+          let password = document.querySelector("#login-password").value;
 
-            console.log(message);
-
-            if (message.tag == "register") {
-                if (message.data.success) {
-                    window.location.href = `/game.html?token=${message.data.token}`;
-                } else {
-                    alert(message.data.message);
-                }
-            } else if (message.tag == "login") {
-                if (message.data.success) {
-                    window.location.href = `/game.html?token=${message.data.token}`;
-                } else {
-                    alert(message.data.message);
-                }
-            }
+          SEND_WS_MESSAGE("login", {
+            username,
+            password,
+          });
         });
 
-        document.querySelector(".register-form > button").addEventListener("click", () => {
-            let username = document.querySelector("#register-username").value;
-            let email = document.querySelector("#register-email").value;
-            let password = document.querySelector("#register-password").value;
+      document
+        .querySelector(".reset-form > button")
+        .addEventListener("click", () => {
+          let email = document.querySelector("#reset-email").value;
 
-            SEND_WS_MESSAGE("register", {
-                username,
-                email,
-                password,
-            });
-        });
-
-        document.querySelector(".login-form > button").addEventListener("click", () => {
-            let username = document.querySelector("#login-username").value;
-            let password = document.querySelector("#login-password").value;
-
-            SEND_WS_MESSAGE("login", {
-                username,
-                password,
-            });
+          SEND_WS_MESSAGE("forgot_password", {
+            email,
+          });
         });
     </script>
-</body>
-
+  </body>
 </html>

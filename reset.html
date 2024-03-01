@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>LOB Basket</title>
+
+    <style>
+      * {
+        margin: 0;
+        padding: 0;
+        font-family: sans-serif;
+      }
+
+      body {
+        display: flex;
+        height: 100vh;
+        width: 100vw;
+        flex-direction: column;
+        justify-content: center;
+      }
+
+      .login-form,
+      .register-form,
+      .reset-form {
+        display: flex;
+        flex-direction: column;
+
+        margin: 0 30px;
+      }
+
+      h1 {
+        text-align: center;
+        margin-bottom: 40px;
+      }
+
+      input {
+        margin-bottom: 20px;
+        border: 1px solid black;
+        border-radius: 5px;
+        padding: 10px 20px;
+      }
+
+      label {
+        margin-bottom: 5px;
+      }
+
+      button {
+        margin: 20px 0;
+        border: 1px solid black;
+        border-radius: 5px;
+        padding: 10px 20px;
+        font-weight: bold;
+        background-color: lightgray;
+        color: black;
+      }
+
+      .login-instead,
+      .register-instead,
+      .reset-instead {
+        text-align: center;
+        padding: 5px;
+        color: rgb(26, 92, 92);
+      }
+
+      .hidden {
+        display: none;
+      }
+    </style>
+  </head>
+
+  <body>
+    <div class="reset-form">
+      <h1>RESETOVANJE LOZINKE</h1>
+
+      <label for="reset-email">Nova šifra:</label>
+      <input type="password" name="password" id="reset-password" />
+
+      <button type="button">RESETUJ LOZINKU</button>
+    </div>
+
+    <script src="url.js"></script>
+    <script>
+      const WS = new WebSocket(URL);
+
+      function SEND_WS_MESSAGE(tag, msg) {
+        WS.send(JSON.stringify({ tag, msg }));
+      }
+
+      WS.addEventListener("open", (event) => {
+        // Connection opened
+      });
+
+      WS.addEventListener("message", (event) => {
+        let message = JSON.parse(event.data);
+
+        console.log(message);
+
+        if (message.tag == "reset_password") {
+          alert(message.data.message);
+          if (message.data.success) {
+            window.location.href = "/";
+          }
+        }
+      });
+
+      document
+        .querySelector(".reset-form > button")
+        .addEventListener("click", () => {
+          let password = document.querySelector("#reset-password").value;
+
+          const urlParams = new URLSearchParams(window.location.search);
+          const token = urlParams.get("token");
+
+          SEND_WS_MESSAGE("reset_password", {
+            password,
+            token,
+          });
+        });
+    </script>
+  </body>
+</html>
