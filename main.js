@@ -152,9 +152,10 @@ function runMain() {
                 touchStartMousePos
             );
 
-            // don't allow shooting with just clicking
-            const ballPositionDifference = Math.abs(ball.body.position.y - BALL_STARTING_POSITION.y);
-            if (ballPositionDifference < 2) {
+            // don't allow shooting without moving the ball upwards
+            const ballPositionDifference = ball.body.position.y - BALL_STARTING_POSITION.y;
+            if (ballPositionDifference > -2) {
+                Body.setPosition(ball.body, BALL_STARTING_POSITION);
                 return;
             }
 
