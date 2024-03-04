@@ -66,6 +66,13 @@
       .hidden {
         display: none;
       }
+
+      .register-toggle-password,
+      .login-toggle-password {
+        display: flex;
+        gap: 10px;
+        margin-top: -10px;
+      }
     </style>
   </head>
 
@@ -78,6 +85,11 @@
 
       <label for="login-password">Šifra:</label>
       <input type="password" name="password" id="login-password" />
+
+      <div class="login-toggle-password">
+        <input type="checkbox" id="login-toggle-password" />
+        <label for="login-toggle-password">Prikaži lozinku</label>
+      </div>
 
       <button type="button">PRIJAVI SE</button>
 
@@ -97,9 +109,13 @@
       <label for="register-password">Šifra:</label>
       <input type="password" name="password" id="register-password" />
 
+      <div class="register-toggle-password">
+        <input type="checkbox" id="register-toggle-password" />
+        <label for="register-toggle-password">Prikaži lozinku</label>
+      </div>
+
       <button type="button">REGISTRUJ SE</button>
 
-      <p class="reset-instead">Resetuj lozinku</p>
       <p class="login-instead">Prijavi se</p>
     </div>
 
@@ -211,6 +227,30 @@
           SEND_WS_MESSAGE("forgot_password", {
             email,
           });
+        });
+
+      document
+        .querySelector("#login-toggle-password")
+        .addEventListener("change", (e) => {
+          let passwordInput = document.querySelector("#login-password");
+
+          if (e.currentTarget.checked) {
+            passwordInput.type = "text";
+          } else {
+            passwordInput.type = "password";
+          }
+        });
+
+      document
+        .querySelector("#register-toggle-password")
+        .addEventListener("change", (e) => {
+          let passwordInput = document.querySelector("#register-password");
+
+          if (e.currentTarget.checked) {
+            passwordInput.type = "text";
+          } else {
+            passwordInput.type = "password";
+          }
         });
     </script>
   </body>
