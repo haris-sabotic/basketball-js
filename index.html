@@ -79,6 +79,7 @@
 
       .modal-container {
         opacity: 0;
+        pointer-events: none;
 
         background-color: rgba(0, 0, 0, 0.5);
         position: fixed;
@@ -161,6 +162,7 @@
       }
 
       .modal-container-visible {
+        pointer-events: auto;
         opacity: 1;
         transition: opacity 0.3s ease-in-out;
       }
