@@ -259,7 +259,7 @@ function runMain() {
                 OVERLAY_DOM.classList.add("fade-out");
 
                 hulkSmallDesiredPosition = HULK_SMALL_REVEALED_POSITION;
-                HULK_SMALL_DOM.setAttribute("src", "assets/hulk.png");
+                HULK_SMALL_DOM.setAttribute("src", "assets/hulk_small.gif");
             } else if (hulkCurrentPosition == HULK_REVEALED_POSITION) {
                 HULK_NAME_DOM.setAttribute("src", "assets/hulk_name.gif");
                 setTimeout(() => {
