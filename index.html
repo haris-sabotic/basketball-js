@@ -76,10 +76,159 @@
         gap: 10px;
         margin-top: -10px;
       }
+
+      .modal-container {
+        opacity: 0;
+        pointer-events: none;
+
+        background-color: rgba(0, 0, 0, 0.5);
+        position: fixed;
+        margin: 0;
+        padding: 0;
+        top: 0;
+        left: 0;
+        width: 100vw;
+        height: 100vh;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+
+        flex: 1;
+        overflow-y: auto;
+      }
+
+      .modal {
+        transform: translate(0%, -70%);
+        opacity: 0;
+
+        background-color: white;
+        width: 80vw;
+        border: 1px solid lightgray;
+        border-radius: 10px;
+        padding: 10px;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+
+        margin: auto;
+        margin-bottom: 50px;
+      }
+
+      .modal .separator {
+        background-color: lightgray;
+        height: 1px;
+        width: 100%;
+        border-radius: 1000px;
+        margin-bottom: 10px;
+      }
+
+      .modal h1 {
+        font-size: 1.5rem;
+      }
+
+      .modal ul {
+        font-size: 1rem;
+        align-self: stretch;
+        margin: 0;
+        padding-left: 30px;
+      }
+
+      .modal p {
+        font-size: 1.2rem;
+        margin: 0;
+        margin-top: 10px;
+        margin-bottom: 10px;
+        font-weight: bold;
+      }
+
+      .modal li {
+        margin-bottom: 15px;
+      }
+
+      .modal .accept-rules {
+        color: white;
+        font-size: 1.2rem;
+        font-weight: bold;
+        background-color: lightslategray;
+        border: 1px solid lightgray;
+        border-radius: 10px;
+        padding: 10px 30px;
+        margin-bottom: 10px;
+        margin-top: 10px;
+      }
+
+      .modal-container-hidden {
+        opacity: 0;
+        transition: opacity 0.3s ease-in-out;
+      }
+
+      .modal-container-visible {
+        pointer-events: auto;
+        opacity: 1;
+        transition: opacity 0.3s ease-in-out;
+      }
+
+      .modal-hidden {
+        transform: translate(0%, -70%);
+        opacity: 0;
+        transition: transform 0.3s ease-in-out, opacity 0.3s ease-in-out;
+      }
+
+      .modal-visible {
+        transform: translate(0%, 0%);
+        opacity: 1;
+        transition: transform 0.3s ease-in-out, opacity 0.3s ease-in-out;
+      }
     </style>
   </head>
 
   <body>
+    <div class="modal-container">
+      <div class="modal">
+        <h1>PRAVILA IGRE</h1>
+        <div class="separator"></div>
+
+        <p>Bodovanje</p>
+        <ul>
+          <li>
+            Korisnik dobija 2 poena za koš koji ne dira obruč (suza) i 1 poen za
+            običan koš
+          </li>
+          <li>Početni broj života je 10.</li>
+        </ul>
+
+        <p>Nagrade</p>
+        <ul>
+          <li>
+            Nagrada se dodjeljuje igraču sa najboljim skorom i nasumičnom
+            pobjedniku.
+          </li>
+          <li>Nagrada se objavljena na Instagramu profliu @.</li>
+        </ul>
+
+        <p>Uslovi za osvajanje nagrade</p>
+        <ul>
+          <li>Korisnik mora pratiti @ na Instagramu.</li>
+          <li>
+            Registracija za učešće u nagradnoj igri zahtijeva korisničko ime na
+            Instagramu, praćenje naloga, e-mail adresu i šifru.
+          </li>
+          <li>Resetovanje lozinke je moguće putem koda poslanog na e-mail.</li>
+          <li>
+            U slučaju da pobjednik ne prati društvene mreže, nagrada se
+            proslijeđuje sljedećem učesniku.
+          </li>
+        </ul>
+
+        <p>Trajanje igre</p>
+        <ul>
+          <li>Igra traje 60 sekundi.</li>
+        </ul>
+
+        <div class="accept-rules">Prihvatam pravila</div>
+      </div>
+    </div>
+
     <div class="login-form">
       <h1>PRIJAVA</h1>
 
@@ -256,6 +405,25 @@
             passwordInput.type = "password";
           }
         });
+
+      /// MODAL
+      let modal = document.querySelector(".modal");
+      let modalContainer = document.querySelector(".modal-container");
+      const modalSeen = localStorage.getItem("modalSeen");
+      if (!modalSeen) {
+        modal.classList.add("modal-visible");
+        modalContainer.classList.add("modal-container-visible");
+      }
+
+      document.querySelector(".accept-rules").addEventListener("click", () => {
+        modalContainer.classList.remove("modal-container-visible");
+        modalContainer.classList.add("modal-container-hidden");
+
+        modal.classList.remove("modal-visible");
+        modal.classList.add("modal-hidden");
+
+        localStorage.setItem("modalSeen", true);
+      });
     </script>
   </body>
 </html>

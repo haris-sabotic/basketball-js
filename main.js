@@ -208,14 +208,23 @@ function runMain() {
     let hoopVerticalDirection = 0;
     let hoopVerticalSpeed = 5;
 
-    const HULK_HIDDEN_POSITION = -900;
-    const HULK_REVEALED_POSITION = -300;
     const HULK_CONTAINER_DOM = document.querySelector(".hulk-container");
     const HULK_DOM = document.querySelector(".hulk");
+    const HULK_SMALL_CONTAINER_DOM = document.querySelector(".hulk-small-container");
+    const HULK_SMALL_DOM = document.querySelector(".hulk-small");
+
     const HULK_NAME_DOM = document.querySelector(".hulk-name");
     const OVERLAY_DOM = document.querySelector(".overlay");
+
+    const HULK_HIDDEN_POSITION = -900;
+    const HULK_REVEALED_POSITION = -300;
     let hulkCurrentPosition = HULK_HIDDEN_POSITION;
     let hulkDesiredPosition = HULK_HIDDEN_POSITION;
+
+    const HULK_SMALL_HIDDEN_POSITION = -500;
+    const HULK_SMALL_REVEALED_POSITION = -140;
+    let hulkSmallCurrentPosition = HULK_SMALL_HIDDEN_POSITION;
+    let hulkSmallDesiredPosition = HULK_SMALL_HIDDEN_POSITION;
 
     PIXI_APP.ticker.add((_delta) => {
         if (hulkCurrentPosition < hulkDesiredPosition) {
@@ -248,12 +257,23 @@ function runMain() {
                 audioBackground.play();
                 OVERLAY_DOM.classList.remove("fade-in");
                 OVERLAY_DOM.classList.add("fade-out");
+
+                hulkSmallDesiredPosition = HULK_SMALL_REVEALED_POSITION;
+                HULK_SMALL_DOM.setAttribute("src", "assets/hulk_small.gif");
             } else if (hulkCurrentPosition == HULK_REVEALED_POSITION) {
                 HULK_NAME_DOM.setAttribute("src", "assets/hulk_name.gif");
                 setTimeout(() => {
                     HULK_NAME_DOM.style.display = "none";
                 }, 2700);
             }
+        }
+
+        if (hulkSmallCurrentPosition < hulkSmallDesiredPosition) {
+            const diff = hulkSmallDesiredPosition - hulkSmallCurrentPosition;
+            const dist = Math.min(15, diff);
+
+            hulkSmallCurrentPosition += dist;
+            HULK_SMALL_CONTAINER_DOM.style.bottom = `${hulkSmallCurrentPosition}px`;
         }
 
         if (enableMovingHorizontallyAfterEachPoint) {

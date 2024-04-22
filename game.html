@@ -124,12 +124,36 @@
         bottom: -900px;
         margin-left: auto;
         margin-right: auto;
-        text-align: center;
         width: 100vw;
         user-select: none;
         -webkit-user-select: none;
         -webkit-touch-callout: none;
         touch-action: manipulation;
+        display: flex;
+        justify-content: center;
+      }
+
+      .hulk-small {
+        height: 400px;
+        user-select: none;
+        touch-action: none;
+        margin-right: -80px;
+      }
+
+      .hulk-small-container {
+        position: fixed;
+        height: 500px;
+        bottom: -500px;
+        margin-left: auto;
+        margin-right: auto;
+        width: 100vw;
+        pointer-events: none;
+        user-select: none;
+        -webkit-user-select: none;
+        -webkit-touch-callout: none;
+        touch-action: none;
+        display: flex;
+        justify-content: end;
       }
 
       .hulk-name-container {
@@ -209,6 +233,10 @@
       <img src="" alt="" class="hulk" />
     </div>
 
+    <div class="hulk-small-container">
+      <img src="" alt="" class="hulk-small" />
+    </div>
+
     <div class="hulk-name-container">
       <img src="" alt="" class="hulk-name" />
     </div>
@@ -217,6 +245,10 @@
       // PRELOAD HULK GIF
       let HULK_GIF = new Image();
       HULK_GIF.src = "assets/hulk.gif";
+
+      // PRELOAD HULK SMALL GIF
+      let HULK_SMALL_GIF = new Image();
+      HULK_SMALL_GIF.src = "assets/hulk_small.gif";
 
       // PRELOAD HULK NAME GIF
       let HULK_NAME_GIF = new Image();
