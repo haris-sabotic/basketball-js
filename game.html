@@ -282,6 +282,11 @@
       };
 
       document.querySelector("#play").addEventListener("click", playGame);
+
+      document.querySelector(".log-out").addEventListener("click", () => {
+        localStorage.removeItem("token");
+        window.location.href = "/";
+      });
     </script>
   </body>
 </html>
