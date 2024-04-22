@@ -1,4 +1,4 @@
-const TOKEN = (new URLSearchParams(window.location.search)).get('token');
+const TOKEN = localStorage.getItem('token');
 
 const
     Vector = Matter.Vector,

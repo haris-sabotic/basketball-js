@@ -19,6 +19,7 @@
       }
 
       .play-container {
+        position: relative;
         width: 100vw;
         height: 100vh;
         display: flex;
@@ -30,6 +31,27 @@
       .play-container > p {
         color: white;
         font-size: 3.5rem;
+      }
+
+      .play-container > a {
+        color: white;
+        font-size: 3.5rem;
+      }
+
+      .play-container > .log-out {
+        position: absolute;
+        top: 0;
+        right: 0;
+        margin: 20px;
+        text-underline-offset: 5px;
+      }
+
+      .play-container > .scoreboard {
+        position: absolute;
+        top: 0;
+        left: 0;
+        margin: 20px;
+        text-underline-offset: 5px;
       }
 
       #play {
@@ -164,6 +186,8 @@
     <div class="play-container">
       <p>Možete igrati još <span id="games-left">_</span> puta.</p>
       <button id="play">PLAY</button>
+      <a href="#" class="log-out">Log out</a>
+      <a class="scoreboard" href="/scoreboard.html">Scoreboard</a>
     </div>
 
     <div class="video-container hidden">

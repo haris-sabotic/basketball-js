@@ -187,7 +187,8 @@
           }
         } else if (message.tag == "login") {
           if (message.data.success) {
-            window.location.href = `/game.html?token=${message.data.token}`;
+            localStorage.setItem("token", message.data.token);
+            window.location.href = `/game.html`;
           } else {
             alert(message.data.message);
           }
