@@ -25,6 +25,17 @@
       h1 {
         text-align: center;
         margin-top: 20px;
+        padding-left: 30px;
+        padding-right: 30px;
+        position: relative;
+      }
+
+      .back-button {
+        width: 25px;
+        height: 25px;
+        position: absolute;
+        top: 5px;
+        left: 10px;
       }
 
       a {
@@ -53,7 +64,10 @@
   </head>
 
   <body>
-    <h1>SCOREBOARD</h1>
+    <h1>
+      <img class="back-button" src="assets/arrow-left.svg" alt="" />
+      SCOREBOARD
+    </h1>
     <a href="/my_games.html">Moje igre</a>
 
     <div class="loading">Loading...</div>
@@ -62,6 +76,10 @@
 
     <script src="url.js"></script>
     <script>
+      document.querySelector(".back-button").addEventListener("click", () => {
+        history.back();
+      });
+
       const WS = new WebSocket(WS_URL);
 
       function SEND_WS_MESSAGE(tag, msg) {
